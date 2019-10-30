@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- Required meta tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>ENTREGAS YA</title>
+
+    <!-- Layout -->
+    <link rel="import" href="layout.html">
+
+    <!-- include leaflet -->
+    <link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div id="nav-placeholder"></div>
+
+    <!-- Content -->
+    <div class="container">
+
+        <!-- Map -->
+        <div id="mapid"></div>
+
+        <!-- Incident Types -->
+        <div id="right">
+            <div id="incidents">
+                <h2>Tipos de incidentes</h2>
+                <ul id="types"></ul>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Scripts -->
+    <script src="./lib/leaflet/leaflet.js" defer></script>
+    <!-- Include client -->
+    <script src="./js/config.js" defer></script>
+    <script src="./js/mapCreation.js" defer></script>
+    <script src="./js/drawer.js" defer></script>
+    <script src="./js/client_v1.js" defer></script>
+</body>
+</html>

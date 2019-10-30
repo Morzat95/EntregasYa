@@ -1,0 +1,35 @@
+body {
+  /* font-family: Arial; */
+  height: 100%;
+}
+
+#mapid {
+  background: #CCC;
+  position: absolute;
+
+  top: 5.5%;
+  bottom: 0px;
+  left: 0;
+
+  width: 75%;
+}
+
+#right {
+  background-color: #6c757d;
+  color: #fff;
+  position: absolute;
+
+  top: 5.5%;
+  right: 0px;
+  bottom: 0px;
+
+  width: 25%;
+}
+
+#incidents {
+  margin: 7px 15px;
+}
+
+ul {
+  
+}
