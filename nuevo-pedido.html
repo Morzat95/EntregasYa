@@ -121,10 +121,56 @@
     <!--
     <div class="container-fluid mt-1" style="height: 90%;">
         Crear form para hacer pedidos
-    </div>
+
+    <br>
     -->
+    <!-- Testeando normalización -->
+    <label for="calle">Calle</label>
+    <input type="text" id="calle" value="Loria">
+
+    <label for="altura">Altura</label>
+    <input type="number" id="altura" value="300">
+
+    <label for="partido">Partido</label>
+    <input type="text" id="partido" value="Lomas">
+
+    <button type="submit" onclick="normalizar();">Validar</button>
+
+    </div>
+
     <script src="js/normalizador.js"></script>
     <script src="js/nuevo_pedido.js"></script>
     <script src="/lib/jquery-3.1.1.min.js"></script>
+
+    <script>
+        url = 'http://servicios.usig.buenosaires.gob.ar/normalizar/?direccion=';
+
+        function normalizar() {
+
+            calle = $('#calle').val();
+            altura = $('#altura').val();
+            partido = $('#partido').val();
+
+            if (altura)
+                altura = ' ' + altura;
+
+            if (partido)
+                partido = ', ' + partido;
+
+            // requestDireccion(calle, altura, partido).then(log);
+            requestDireccion(calle, altura, partido).done(log);
+
+        }
+
+        function requestDireccion(calle, altura, partido) {
+            return $.ajax(url + calle + altura + partido);
+        }
+
+        function log(response) {
+            ret = response.errorMessage ? response.errorMessage : response;
+            console.log(ret);
+        }
+    </script>
+
 </body>
 </html>
