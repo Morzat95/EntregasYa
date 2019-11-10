@@ -43,7 +43,7 @@ function generarLista(id){
     /* Crear div para mostrar listado*/
     if(document.getElementById){
         var bloque = document.getElementById(id);
-        bloque.style.display = (bloque.style.display == 'none') ? 'block' : 'block';
+        bloque.style.display = (bloque.style.display == 'none') ? 'block' : 'none';
     }
 
     var crear = new Crear();
