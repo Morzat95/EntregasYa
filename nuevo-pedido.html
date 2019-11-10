@@ -7,6 +7,7 @@
     <title>ENTREGAS YA</title>
 
     <link rel="import" href="layout.html">
+    <script src="js/myConfig.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -28,12 +29,14 @@
     <label for="partido">Partido</label>
     <input type="text" id="partido" value="Lomas">
 
-    <button type="submit" onclick="normalizar();">Validar</button>
+    <button type="submit" onclick="normalizar();obtenerRepartidoresDisponibles();">Validar</button>
 
     </div>
 
     <script>
-        url = 'http://servicios.usig.buenosaires.gob.ar/normalizar/?direccion=';
+        urlNormalizador = Config.urlNormalizador;
+        urlEntregasYa = Config.urlEntregasYa;
+        urlRepartidores = '/deliverydrivers/';
 
         function normalizar() {
 
@@ -53,14 +56,23 @@
         }
 
         function requestDireccion(calle, altura, partido) {
-            return $.ajax(url + calle + altura + partido);
+            return $.ajax(urlNormalizador + calle + altura + partido);
         }
-
+        
         function log(response) {
             ret = response.errorMessage ? response.errorMessage : response;
             console.log(ret);
         }
-    </script>
+
+        function obtenerRepartidoresDisponibles() {
+            requestRepartidor().done(log);
+        }
+
+        function requestRepartidor(repartidor_id) {
+            repartidor_id = repartidor_id ? repartidor_id : '';
+            return $.ajax(urlEntregasYa + urlRepartidores + repartidor_id);
+        }
+        </script>
 
 </body>
 </html>
