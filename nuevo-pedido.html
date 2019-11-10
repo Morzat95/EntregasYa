@@ -4,17 +4,127 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ENTREGAS YA</title>
+    
+    <title>Entregas Ya</title>
 
     <link rel="import" href="layout.html">
+    <link rel="stylesheet" href="css/styles_np.css">
 </head>
 <body>
     <!-- Navigation Bar -->
     <div id="nav-placeholder"></div>
 
     <!-- Content -->
+    <div id="content">
+        <div class="form-title">
+            <h3>Solicitar pedido</h3>
+        </div>
+            
+        <form>
+            <!--Pedido de direcciones-->
+            <div class="form-group">
+                <div class="title">
+                    <h3>Dirección</h3>
+                </div>
+   
+                <label for="">Direccion Origen</label>
+                <input id="origen" class="form-control" required autocomplete="off"/>
+                <button type="submit" class="btn btn-primary" onclick="normalizar('origen')">Validar</button>
+                <br>       
+                <label for="">Direccion Destino</label>
+                <input id="destino" class="form-control" required autocomplete="off"/>
+                <button type="submit" class="btn btn-primary" onclick="normalizar('destino')">Validar</button>
+            </div> <!--Pedido de direcciones-->
+
+            <!--Pedir datos de paquete-->
+            <div class="form-group">
+                <div class="title">
+                    <h3>Datos de paquete</h3>
+                </div>
+            
+                <label for="">Tipo</label>
+                <input class="form-control" required autocomplete="off"/>
+
+                <label for="">Tamaño</label>
+                <input class="form-control" required autocomplete="off"/>
+                      
+                <label for=""> Peso</label>
+                <input class="form-control" required autocomplete="off"/>             
+            </div> <!--Pedir datos de paquete-->
+
+            <!--Seleccionar repartidor-->
+            <div class="form-group">
+                <div class="title">
+                    <h3>Seleccionar repartidor</h3>
+                </div>
+
+                <div>
+                    <label for="">Cantidad de viajes</label>
+                    <select class="form-control">
+                        <option selected>Cantidad de viajes</option>
+                        <option value="1">menos de 50</option>
+                        <option value="2">mas de 50</option>
+                    </select>    
+
+                    <label for="">Tipo de vehiculo</label>
+                    <select class="form-control">
+                        <option selected>Tipo de vehiculo</option>
+                        <option value="1">Camioneta</option>
+                        <option value="2">Automovil</option>
+                        <option value="3">Bici</option>
+                        <option value="4">Otros</option>
+                    </select>
+
+                    <label for="">Tiempo estimado de espera</label>
+                    <select class="form-control">
+                        <option selected>Tiempo estimado de espera</option>
+                        <option value="1"> 1 - 30 min</option>
+                        <option value="2">30 - 60 min</option>
+                        <option value="3">más de 1 hora</option>
+                    </select>
+
+                    <div class="listar-repartidores">
+                        <button class="btn btn-primary" onclick="generarLista('listado-repartidores')">
+                            Listar Repartidores
+                        </button>
+                    </div>
+                </div>
+
+                <div id="listado-repartidores">
+                    <div class="lista">
+                        <h4>Repartidores</h4>
+                        <ul id="types">
+                        
+                        </ul>
+                    </div>
+                    <div class="lista-info">
+
+                    </div>
+                    
+                </div>
+            </div> <!--Seleccionar repartidor-->
+
+            <div class="form-button">
+                <button type="submit" class="btn btn-primary">Crear pedido</button>
+            </div>
+
+        </form>
+    </div> <!-- Formulario -->
+
+    <footer class="pie-pagina">
+        <div class="barra">
+
+        </div>
+    </footer>
+
+    <!-- Content -->
+    <!--
     <div class="container-fluid mt-1" style="height: 90%;">
         Crear form para hacer pedidos
     </div>
+    -->
+    <script src="js/normalizador.js"></script>
+    <script src="js/nuevo_pedido.js"></script>
+    <script src="/lib/jquery-3.1.1.min.js"></script>
 </body>
 </html>
