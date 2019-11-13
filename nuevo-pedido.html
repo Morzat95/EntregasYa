@@ -196,11 +196,45 @@
 
         function obtenerRepartidoresDisponibles() {
             // requestRepartidor().then(extractRepartidor).done(log);
+
+            // Versión 1
             requestRepartidor()
                 .then(extractRepartidor)
                 .then(repartidores => repartidores.forEach(repartidor => {
                     resolverPosiciones(repartidor)
                 }));
+
+            // Versión 2
+            // requestRepartidor()
+            //     .then(extractRepartidor)
+            //     .then(function (repartidores) {
+            //         newRepartidores = [];
+            //         repartidores.forEach(repartidor => {
+            //             // newRepartidores.push(resolverPosiciones2(repartidor));
+            //             resolverPosiciones2(repartidor).done(repartidor => {
+            //                 newRepartidores.push(repartidor);
+            //             });
+            //         });
+            //         return newRepartidores;
+            //     })
+
+                // Versión 2.1
+                // .then(repartidores => repartidores.forEach(repartidor => {
+                //     console.log('repartidor');
+                //     console.log(repartidor);
+                //     drawDriver(repartidor);
+                // }));
+
+                // Versión 2.2
+                // .then(function (repartidoresNuevos) {
+                //     console.log(`repartidores nuevos: ${repartidoresNuevos}`);
+                //     console.log(repartidoresNuevos);
+                //     repartidoresNuevos.forEach(repartidor => {
+                //         console.log('Repartidor');
+                //         console.log(repartidor);
+                //         drawDriver(repartidor);
+                //     });
+                // });
         }
 
         var drawDriver = function (repartidor) {
@@ -230,6 +264,14 @@
                         repartidor.positions = extractPosiciones(response);
                             // no va acá
                             drawDriver(repartidor);
+                        return repartidor;
+                    });
+        }
+
+        var resolverPosiciones2 = function (repartidor) {
+            return requestPosiciones(repartidor.id)
+                    .then(function (response) {
+                        repartidor.positions = extractPosiciones(response);
                         return repartidor;
                     });
         }
