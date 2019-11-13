@@ -152,6 +152,10 @@
 
     </div>
 
+    <div>
+        <select name="DirectionsList" id="DirectionsList"></select>
+    </div>
+
     <script>
         urlNormalizador = Config.urlNormalizador;
         urlEntregasYa = Config.urlEntregasYa;
@@ -180,12 +184,26 @@
 
             // requestDireccion(calle, altura, partido).then(log);
             // requestDireccion(calle, altura, partido).then(extractDirecciones).done(log);
-            requestDireccion(calle, altura, partido).then(extractDirecciones);
 
+            // requestDireccion(calle, altura, partido).then(extractDirecciones);
+            requestDireccion(calle, altura, partido).then(extractDirecciones).then(populateDirectionsList);
         }
 
         function requestDireccion(calle, altura, partido) {
             return $.ajax(urlNormalizador + calle + altura + partido);
+        }
+
+        var populateDirectionsList = function (directions) {
+            console.log('Generando Listado de Direcciones...');
+
+            list = document.getElementById('DirectionsList');
+            $('#DirectionsList').empty();
+
+            directions.forEach(direction => {
+                option = document.createElement('option');
+                option.value = option.textContent = direction.direccion;
+                list.appendChild(option);
+            });
         }
         
         var extractDirecciones = function (response) {
