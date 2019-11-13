@@ -198,11 +198,11 @@
             // requestRepartidor().then(extractRepartidor).done(log);
 
             // Versión 1
-            requestRepartidor()
-                .then(extractRepartidor)
-                .then(repartidores => repartidores.forEach(repartidor => {
-                    resolverPosiciones(repartidor)
-                }));
+            // requestRepartidor()
+            //     .then(extractRepartidor)
+            //     .then(repartidores => repartidores.forEach(repartidor => {
+            //         resolverPosiciones(repartidor)
+            //     }));
 
             // Versión 2
             // requestRepartidor()
@@ -235,6 +235,16 @@
                 //         drawDriver(repartidor);
                 //     });
                 // });
+
+            // Versión 3
+            requestRepartidor()
+                .then(extractRepartidor)
+                .then(function (repartidores) {
+                    repartidores.forEach(repartidor => {
+                        resolverPosiciones2(repartidor)
+                            .then(drawDriver);
+                    });
+                });
         }
 
         var drawDriver = function (repartidor) {
