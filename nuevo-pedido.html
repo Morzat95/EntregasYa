@@ -9,7 +9,19 @@
 
     <link rel="import" href="layout.html">
     <link rel="stylesheet" href="css/styles_np.css">
-    <script src="js/myConfig.js"></script>
+
+    <!-- include jQuery -->
+    <script src="/lib/jquery-3.1.1.min.js"></script>
+
+    <!-- include leaflet -->
+    <link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
+    <script src="./lib/leaflet/leaflet.js"></script>
+
+    <!-- <script src="js/normalizador.js"></script>
+    <script src="js/nuevo_pedido.js"></script> -->
+    <script src="js/myJS/myConfig.js"></script>
+    <script src="js/mapCreation.js"></script>
+    <script src="js/myJS/drawer.js"></script>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -112,6 +124,8 @@
         </form>
     </div> <!-- Formulario -->
 
+    <div id="map" style="width: 600px; height: 400px; background: #CCC;"></div>
+
     <footer class="pie-pagina">
         <div class="barra">
 
@@ -138,14 +152,19 @@
 
     </div>
 
-    <script src="js/normalizador.js"></script>
-    <script src="js/nuevo_pedido.js"></script>
-    <script src="/lib/jquery-3.1.1.min.js"></script>
-
     <script>
         urlNormalizador = Config.urlNormalizador;
         urlEntregasYa = Config.urlEntregasYa;
         urlRepartidores = '/deliverydrivers/';
+        urlPosiciones = '/positions/';
+
+        // Mapa
+
+        map = createMap('map');
+
+        var drawer = new Drawer();
+
+        // Direcciones
 
         function normalizar() {
 
@@ -160,7 +179,8 @@
                 partido = ', ' + partido;
 
             // requestDireccion(calle, altura, partido).then(log);
-            requestDireccion(calle, altura, partido).done(log);
+            // requestDireccion(calle, altura, partido).then(extractDirecciones).done(log);
+            requestDireccion(calle, altura, partido).then(extractDirecciones);
 
         }
 
@@ -168,18 +188,62 @@
             return $.ajax(urlNormalizador + calle + altura + partido);
         }
         
-        function log(response) {
-            ret = response.errorMessage ? response.errorMessage : response;
-            console.log(ret);
+        var extractDirecciones = function (response) {
+            return responseExtract('direccionesNormalizadas', response);
         }
+
+        // Repartidores
 
         function obtenerRepartidoresDisponibles() {
-            requestRepartidor().done(log);
+            // requestRepartidor().then(extractRepartidor).done(log);
+            requestRepartidor()
+                .then(extractRepartidor)
+                .then(repartidores => repartidores.forEach(repartidor => {
+                    resolverPosiciones(repartidor)
+                }));
         }
 
+        var drawDriver = function (repartidor) {
+            drawer.drawDriverInMap(repartidor, map);
+        }
+        
         function requestRepartidor(repartidor_id) {
             repartidor_id = repartidor_id ? repartidor_id : '';
             return $.ajax(urlEntregasYa + urlRepartidores + repartidor_id);
+        }
+
+        var requestPosiciones = function (repartidor_id) {
+            return $.ajax(urlEntregasYa + urlRepartidores + repartidor_id + urlPosiciones);
+        }
+        
+        var extractRepartidor = function (response) {
+            return responseExtract('drivers', response);
+        }
+
+        var extractPosiciones = function (response) {
+            return responseExtract('positions', response);
+        }
+
+        var resolverPosiciones = function (repartidor) {
+            return requestPosiciones(repartidor.id)
+                    .then(function (response) {
+                        repartidor.positions = extractPosiciones(response);
+                            // no va acá
+                            drawDriver(repartidor);
+                        return repartidor;
+                    });
+        }
+
+        // Métodos útiles
+        
+        var responseExtract = function(attr, response) {
+            console.log(response);
+            return response[attr]
+        }
+
+        function log(response) {
+            ret = response.errorMessage ? response.errorMessage : response;
+            console.log(ret);
         }
         </script>
 
