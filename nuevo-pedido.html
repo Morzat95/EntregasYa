@@ -17,11 +17,15 @@
     <link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
     <script src="./lib/leaflet/leaflet.js"></script>
 
-    <!-- <script src="js/normalizador.js"></script>
-    <script src="js/nuevo_pedido.js"></script> -->
     <script src="js/myJS/myConfig.js"></script>
     <script src="js/mapCreation.js"></script>
     <script src="js/myJS/drawer.js"></script>
+
+    <style>
+        span {
+            color: red;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -33,7 +37,7 @@
             <h3>Solicitar pedido</h3>
         </div>
             
-        <form>
+        <!-- <form> -->
             <!--Pedido de direcciones-->
             <div class="form-group">
                 <div class="title">
@@ -41,12 +45,24 @@
                 </div>
    
                 <label for="">Direccion Origen</label>
-                <input id="origen" class="form-control" required autocomplete="off" placeholder="Lamas 300, Lomas">
-                <button type="submit" class="btn btn-primary" onclick="normalizar('origen')">Validar</button>
+                <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" value="Loria 300, Lomas">
+                <span id="error-Origen"></span>
+                <button type="submit" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button>
+                
                 <br>       
+                
+                <div>
+                    <select name="DirectionsList" id="DirectionsListOrigen"></select>
+                </div>
+                
                 <label for="">Direccion Destino</label>
-                <input id="destino" class="form-control" required autocomplete="off" placeholder="Lamas 300, Lomas"/>
-                <button type="submit" class="btn btn-primary" onclick="normalizar('destino')">Validar</button>
+                <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas"/>
+                <span id="error-Destino"></span>
+                <button type="submit" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button>
+
+                <div>
+                    <select name="DirectionsList" id="DirectionsListDestino"></select>
+                </div>
             </div> <!--Pedido de direcciones-->
 
             <!--Pedir datos de paquete-->
@@ -56,13 +72,13 @@
                 </div>
             
                 <label for="">Tipo</label>
-                <input class="form-control" required autocomplete="off"/>
+                <input class="form-control" autocomplete="off"/>
 
                 <label for="">Tamaño</label>
-                <input class="form-control" required autocomplete="off"/>
+                <input class="form-control" autocomplete="off"/>
                       
                 <label for=""> Peso</label>
-                <input class="form-control" required autocomplete="off"/>             
+                <input class="form-control" autocomplete="off"/>             
             </div> <!--Pedir datos de paquete-->
 
             <!--Seleccionar repartidor-->
@@ -97,64 +113,28 @@
                     </select>
 
                     <div class="listar-repartidores">
-                        <button class="btn btn-primary" onclick="generarLista('listado-repartidores')">
+                        <button class="btn btn-primary" onclick="obtenerRepartidoresDisponibles();">
                             Listar Repartidores
                         </button>
                     </div>
                 </div>
 
-                <div id="listado-repartidores">
-                    <div class="lista">
-                        <h4>Repartidores</h4>
-                        <ul id="types">
-                        
-                        </ul>
-                    </div>
-                    <div class="lista-info">
-
-                    </div>
-                    
-                </div>
+                <div id="map" style="width: 740px; height: 400px; background: #CCC;"></div>
+                
             </div> <!--Seleccionar repartidor-->
 
             <div class="form-button">
                 <button type="submit" class="btn btn-primary">Crear pedido</button>
             </div>
 
-        </form>
+        <!-- </form> -->
     </div> <!-- Formulario -->
-
-    <div id="map" style="width: 600px; height: 400px; background: #CCC;"></div>
 
     <footer class="pie-pagina">
         <div class="barra">
 
         </div>
     </footer>
-
-    <!-- Content -->
-    <!--
-    <div class="container-fluid mt-1" style="height: 90%;">
-        Crear form para hacer pedidos
-    <br>
-    -->
-    <!-- Testeando normalización -->
-    <label for="calle">Calle</label>
-    <input type="text" id="calle" value="Loria">
-
-    <label for="altura">Altura</label>
-    <input type="number" id="altura" value="300">
-
-    <label for="partido">Partido</label>
-    <input type="text" id="partido" value="Lomas">
-
-    <button type="submit" onclick="normalizar();obtenerRepartidoresDisponibles();">Validar</button>
-
-    </div>
-
-    <div>
-        <select name="DirectionsList" id="DirectionsList"></select>
-    </div>
 
     <script>
         urlNormalizador = Config.urlNormalizador;
@@ -170,115 +150,68 @@
 
         // Direcciones
 
-        function normalizar() {
-
-            calle = $('#calle').val();
-            altura = $('#altura').val();
-            partido = $('#partido').val();
-
-            if (altura)
-                altura = ' ' + altura;
-
-            if (partido)
-                partido = ', ' + partido;
-
-            // requestDireccion(calle, altura, partido).then(log);
-            // requestDireccion(calle, altura, partido).then(extractDirecciones).done(log);
-
-            // requestDireccion(calle, altura, partido).then(extractDirecciones);
-            requestDireccion(calle, altura, partido).then(extractDirecciones).then(populateDirectionsList);
+        function normalizar(id) {
+            address = document.getElementById(id).value;
+            requestAddress(address)
+                .then(response => checkAddress(response, id))
+                .then(extractAddress)
+                .then(address => populateAddressList(address, id));
         }
 
-        function requestDireccion(calle, altura, partido) {
-            return $.ajax(urlNormalizador + calle + altura + partido);
+        var requestAddress = function (address) {
+            return $.ajax(urlNormalizador + address);
         }
 
-        var populateDirectionsList = function (directions) {
+        var checkAddress = function (response, id) {
+            errorMessage = response['errorMessage'] ? response['errorMessage'] : '';
+            document.getElementById('error-'+id).innerHTML = errorMessage;
+            return response;
+        }
+
+        var populateAddressList = function (address, id) {
             console.log('Generando Listado de Direcciones...');
 
-            list = document.getElementById('DirectionsList');
-            $('#DirectionsList').empty();
+            list = $('#DirectionsList'+id);
+            list.empty();
 
-            directions.forEach(direction => {
+            address.forEach(direction => {
                 option = document.createElement('option');
                 option.value = option.textContent = direction.direccion;
-                list.appendChild(option);
+                list.append(option);
             });
         }
         
-        var extractDirecciones = function (response) {
+        var extractAddress = function (response) {
             return responseExtract('direccionesNormalizadas', response);
         }
 
         // Repartidores
 
         function obtenerRepartidoresDisponibles() {
-            // requestRepartidor().then(extractRepartidor).done(log);
-
-            // Versión 1
-            // requestRepartidor()
-            //     .then(extractRepartidor)
-            //     .then(repartidores => repartidores.forEach(repartidor => {
-            //         resolverPosiciones(repartidor)
-            //     }));
-
-            // Versión 2
-            // requestRepartidor()
-            //     .then(extractRepartidor)
-            //     .then(function (repartidores) {
-            //         newRepartidores = [];
-            //         repartidores.forEach(repartidor => {
-            //             // newRepartidores.push(resolverPosiciones2(repartidor));
-            //             resolverPosiciones2(repartidor).done(repartidor => {
-            //                 newRepartidores.push(repartidor);
-            //             });
-            //         });
-            //         return newRepartidores;
-            //     })
-
-                // Versión 2.1
-                // .then(repartidores => repartidores.forEach(repartidor => {
-                //     console.log('repartidor');
-                //     console.log(repartidor);
-                //     drawDriver(repartidor);
-                // }));
-
-                // Versión 2.2
-                // .then(function (repartidoresNuevos) {
-                //     console.log(`repartidores nuevos: ${repartidoresNuevos}`);
-                //     console.log(repartidoresNuevos);
-                //     repartidoresNuevos.forEach(repartidor => {
-                //         console.log('Repartidor');
-                //         console.log(repartidor);
-                //         drawDriver(repartidor);
-                //     });
-                // });
-
-            // Versión 3
-            requestRepartidor()
-                .then(extractRepartidor)
-                .then(function (repartidores) {
-                    repartidores.forEach(repartidor => {
-                        resolverPosiciones2(repartidor)
+            requestDrivers()
+                .then(extractDriver)
+                .then(function (drivers) {
+                    drivers.forEach(driver => {
+                        resolverPosiciones(driver)
                             .then(drawDriver);
                     });
                 });
         }
 
-        var drawDriver = function (repartidor) {
-            drawer.drawDriverInMap(repartidor, map);
+        var drawDriver = function (driver) {
+            drawer.drawDriverInMap(driver, map);
         }
         
-        function requestRepartidor(repartidor_id) {
-            repartidor_id = repartidor_id ? repartidor_id : '';
-            return $.ajax(urlEntregasYa + urlRepartidores + repartidor_id);
+        function requestDrivers(driver_id) {
+            driver_id = driver_id ? driver_id : '';
+            return $.ajax(urlEntregasYa + urlRepartidores + driver_id);
         }
 
-        var requestPosiciones = function (repartidor_id) {
-            return $.ajax(urlEntregasYa + urlRepartidores + repartidor_id + urlPosiciones);
+        var requestPosiciones = function (driver_id) {
+            return $.ajax(urlEntregasYa + urlRepartidores + driver_id + urlPosiciones);
         }
         
-        var extractRepartidor = function (response) {
+        var extractDriver = function (response) {
             return responseExtract('drivers', response);
         }
 
@@ -286,21 +219,11 @@
             return responseExtract('positions', response);
         }
 
-        var resolverPosiciones = function (repartidor) {
-            return requestPosiciones(repartidor.id)
+        var resolverPosiciones = function (driver) {
+            return requestPosiciones(driver.id)
                     .then(function (response) {
-                        repartidor.positions = extractPosiciones(response);
-                            // no va acá
-                            drawDriver(repartidor);
-                        return repartidor;
-                    });
-        }
-
-        var resolverPosiciones2 = function (repartidor) {
-            return requestPosiciones(repartidor.id)
-                    .then(function (response) {
-                        repartidor.positions = extractPosiciones(response);
-                        return repartidor;
+                        driver.positions = extractPosiciones(response);
+                        return driver;
                     });
         }
 
