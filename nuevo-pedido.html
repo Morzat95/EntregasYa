@@ -21,6 +21,9 @@
     <script src="js/mapCreation.js"></script>
     <script src="js/myJS/drawer.js"></script>
 
+    <script src="js/entities/Driver.js"></script>
+    <script src="js/entities/Tracker.js"></script>
+
     <style>
         span {
             color: red;
@@ -188,13 +191,31 @@
         // Repartidores
 
         function obtenerRepartidoresDisponibles() {
+            tracker = new Tracker(map);
+            // requestDrivers()
+            //     .then(extractDriver)
+            //     .then(function (drivers) {
+            //         drivers.forEach(driver => {
+            //             resolverPosiciones(driver)
+            //                 .then(drawDriver);
+            //         });
+            //     });
             requestDrivers()
                 .then(extractDriver)
                 .then(function (drivers) {
                     drivers.forEach(driver => {
                         resolverPosiciones(driver)
-                            .then(drawDriver);
+                            .then(function (driver) {
+                                driver = new Driver(driver);
+                                tracker.addDriver(driver);
+                                tracker.start();
+                            })
                     });
+                })
+                .done(function() {
+                    // console.log('Fin.');
+                    // console.log(tracker.driversData);
+                    // tracker.start();
                 });
         }
 
@@ -238,6 +259,8 @@
             ret = response.errorMessage ? response.errorMessage : response;
             console.log(ret);
         }
+
+        // driver.run(console.log);
         </script>
 
 </body>
