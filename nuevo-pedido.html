@@ -192,6 +192,7 @@
 
         function obtenerRepartidoresDisponibles() {
             tracker = new Tracker(map);
+            // Old
             // requestDrivers()
             //     .then(extractDriver)
             //     .then(function (drivers) {
@@ -200,6 +201,29 @@
             //                 .then(drawDriver);
             //         });
             //     });
+
+            // No funciona como se espera
+            // requestDrivers()
+            //     .then(extractDriver)
+            //     .then(function (drivers) {
+            //         drivers.forEach(driver => {
+            //             resolverPosiciones(driver)
+            //                 .then(function (driver) {
+            //                     driver = new Driver(driver);
+            //                     tracker.addDriver(driver);
+            //                     // tracker.start();
+            //                     console.log(`Driver ${driver.id} added.`);
+
+            //                 })
+            //         });
+            //     })
+            //     .then(function() {
+            //         console.log('Fin.');
+            //         // console.log(tracker.driversData);
+            //         tracker.start();
+            //     });
+
+            // New
             requestDrivers()
                 .then(extractDriver)
                 .then(function (drivers) {
@@ -208,14 +232,9 @@
                             .then(function (driver) {
                                 driver = new Driver(driver);
                                 tracker.addDriver(driver);
-                                tracker.start();
-                            })
+                                console.log(`Driver ${driver.id} added.`);
+                            });
                     });
-                })
-                .done(function() {
-                    // console.log('Fin.');
-                    // console.log(tracker.driversData);
-                    // tracker.start();
                 });
         }
 
@@ -260,7 +279,6 @@
             console.log(ret);
         }
 
-        // driver.run(console.log);
         </script>
 
 </body>

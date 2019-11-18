@@ -1,9 +1,8 @@
 class Tracker {
+    
     constructor (map) {
         this.map = map;
         this.driversData = [];
-
-        this.test = 0;
     }
 
     addDriver (driver) {
@@ -19,20 +18,8 @@ class Tracker {
             driverLayer.addLayer(L.marker(newPosition).bindPopup(driver.name));
         }
 
-        this.driversData.push({
-            driver: driver,
-            updater: updater
-        });
-    }
-
-    start () {
-        if (this.test == 0) {
-            this.test += 1;
-            this.driversData.forEach(function(data) {
-                var driver = data.driver;
-                driver.run(data.updater);
-            });
-        }
+        // New
+        driver.run(updater);
     }
 }
 
