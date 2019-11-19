@@ -20,6 +20,8 @@ class Tracker {
 
         // New
         driver.run(updater);
+
+        console.log(`Driver ${driver.id} added.`);
     }
 }
 

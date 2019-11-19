@@ -13,7 +13,7 @@
     <link rel="import" href="layout.html">
 
     <!-- include leaflet -->
-    <link rel="stylesheet" href="./lib/leaflet/leaflet.css" />
+    <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
 
 </head>
 <body>
@@ -37,11 +37,38 @@
     </div>
 
     <!-- Scripts -->
-    <script src="./lib/leaflet/leaflet.js" defer></script>
+    <script src="lib/leaflet/leaflet.js"></script>
     <!-- Include client -->
-    <script src="./js/config.js" defer></script>
-    <script src="./js/mapCreation.js" defer></script>
-    <script src="./js/drawer.js" defer></script>
-    <script src="./js/client_v1.js" defer></script>
+    <script src="js/myJS/myConfig.js"></script>
+    <script src="js/mapCreation.js"></script>
+    <script src="js/myJS/drawer.js"></script>
+    <script src="js/myJS/requests.js"></script>
+    <script src="js/entities/Driver.js"></script>
+    <script src="js/entities/Tracker.js"></script>
+
+    <script>
+        urlEntregasYa = Config.urlEntregasYa;
+        // urlRequests = '/requests/';
+        urlRequests = Config.urlRequests;
+
+        map = createMap('mapid');
+
+        tracker = new Tracker(map);
+
+        requestPedidos()
+            .then(extractPedidos)
+            .then(requests => {
+                requests.forEach(request => {
+                    resolverRepartidor(request)
+                        .then(request => {
+                            resolverPosiciones(request.driver)
+                                .then(driver => {
+                                    driver = new Driver(driver);
+                                    tracker.addDriver(driver);
+                                });
+                        });
+                });
+            });
+    </script>
 </body>
 </html>

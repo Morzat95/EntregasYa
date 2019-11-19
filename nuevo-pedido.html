@@ -23,6 +23,7 @@
 
     <script src="js/entities/Driver.js"></script>
     <script src="js/entities/Tracker.js"></script>
+    <script src="js/myJS/requests.js"></script>
 
     <style>
         span {
@@ -142,8 +143,10 @@
     <script>
         urlNormalizador = Config.urlNormalizador;
         urlEntregasYa = Config.urlEntregasYa;
-        urlRepartidores = '/deliverydrivers/';
-        urlPosiciones = '/positions/';
+        // urlRepartidores = '/deliverydrivers/';
+        // urlPosiciones = '/positions/';
+        urlRepartidores = Config.urlRepartidores;
+        urlPosiciones = Config.urlPosiciones;
 
         // Mapa
 
@@ -159,10 +162,6 @@
                 .then(response => checkAddress(response, id))
                 .then(extractAddress)
                 .then(address => populateAddressList(address, id));
-        }
-
-        var requestAddress = function (address) {
-            return $.ajax(urlNormalizador + address);
         }
 
         var checkAddress = function (response, id) {
@@ -183,95 +182,60 @@
                 list.append(option);
             });
         }
-        
-        var extractAddress = function (response) {
-            return responseExtract('direccionesNormalizadas', response);
-        }
 
         // Repartidores
 
         function obtenerRepartidoresDisponibles() {
-            tracker = new Tracker(map);
+
             // Old
-            // requestDrivers()
-            //     .then(extractDriver)
-            //     .then(function (drivers) {
-            //         drivers.forEach(driver => {
-            //             resolverPosiciones(driver)
-            //                 .then(drawDriver);
-            //         });
-            //     });
+            requestDrivers()
+            .then(extractDrivers)
+            .then(function (drivers) {
+                drivers.forEach(driver => {
+                    resolverPosiciones(driver)
+                    .then(drawDriver);
+                });
+            });
+            
+            // tracker = new Tracker(map);
 
             // No funciona como se espera
             // requestDrivers()
             //     .then(extractDriver)
+            //     .then(function (drivers) {
+                //         drivers.forEach(driver => {
+                    //             resolverPosiciones(driver)
+                    //                 .then(function (driver) {
+                        //                     driver = new Driver(driver);
+                        //                     tracker.addDriver(driver);
+                        //                     // tracker.start();
+                        //                     console.log(`Driver ${driver.id} added.`);
+                        
+                        //                 })
+                        //         });
+                        //     })
+                        //     .then(function() {
+                            //         console.log('Fin.');
+                            //         // console.log(tracker.driversData);
+                            //         tracker.start();
+                            //     });
+                            
+            // New
+            // requestDrivers()
+            //     .then(extractDrivers)
             //     .then(function (drivers) {
             //         drivers.forEach(driver => {
             //             resolverPosiciones(driver)
             //                 .then(function (driver) {
             //                     driver = new Driver(driver);
             //                     tracker.addDriver(driver);
-            //                     // tracker.start();
-            //                     console.log(`Driver ${driver.id} added.`);
-
-            //                 })
+            //                 });
             //         });
-            //     })
-            //     .then(function() {
-            //         console.log('Fin.');
-            //         // console.log(tracker.driversData);
-            //         tracker.start();
             //     });
-
-            // New
-            requestDrivers()
-                .then(extractDriver)
-                .then(function (drivers) {
-                    drivers.forEach(driver => {
-                        resolverPosiciones(driver)
-                            .then(function (driver) {
-                                driver = new Driver(driver);
-                                tracker.addDriver(driver);
-                                console.log(`Driver ${driver.id} added.`);
-                            });
-                    });
-                });
         }
 
         var drawDriver = function (driver) {
             drawer.drawDriverInMap(driver, map);
-        }
-        
-        function requestDrivers(driver_id) {
-            driver_id = driver_id ? driver_id : '';
-            return $.ajax(urlEntregasYa + urlRepartidores + driver_id);
-        }
-
-        var requestPosiciones = function (driver_id) {
-            return $.ajax(urlEntregasYa + urlRepartidores + driver_id + urlPosiciones);
-        }
-        
-        var extractDriver = function (response) {
-            return responseExtract('drivers', response);
-        }
-
-        var extractPosiciones = function (response) {
-            return responseExtract('positions', response);
-        }
-
-        var resolverPosiciones = function (driver) {
-            return requestPosiciones(driver.id)
-                    .then(function (response) {
-                        driver.positions = extractPosiciones(response);
-                        return driver;
-                    });
-        }
-
-        // Métodos útiles
-        
-        var responseExtract = function(attr, response) {
-            console.log(response);
-            return response[attr]
         }
 
         function log(response) {
@@ -279,7 +243,7 @@
             console.log(ret);
         }
 
-        </script>
+    </script>
 
 </body>
 </html>

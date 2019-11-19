@@ -10,7 +10,9 @@ var Drawer = function() {
     function drawDriverInMap(driver, map) {
         console.log("Dibujando el repartidor: " + driver.id);
 
-		var info = driver.name;
+        random = Math.floor(Math.random() * 3);
+        scoreIcon = random == 0 ? '⋆' : random == 1 ? '☆' : '★';
+		var info = driver.name + ' ' + scoreIcon.repeat(driver.score);
 		// Creamos un marker.
 		var p = L.marker(L.latLng(driver.positions[0].lat, driver.positions[0].lon))
 			.bindPopup(info);
