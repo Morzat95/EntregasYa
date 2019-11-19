@@ -11,11 +11,15 @@ class Tracker {
         // Agregamos el layer al control
         this.map.layersControl.addOverlay(driverLayer, driver.name);
 
+        // Agregamos el marker del repartidor
+        let marker = L.marker(driver.positions[0]);
+        driverLayer.addLayer(marker.bindPopup(driver.name));
+
         var updater = function (newPosition) {
             console.log("Updating view for driver: " + driver.name + "!!");
             console.log(newPosition);
 
-            driverLayer.addLayer(L.marker(newPosition).bindPopup(driver.name));
+            marker.setLatLng(newPosition);
         }
 
         // New
