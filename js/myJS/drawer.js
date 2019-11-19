@@ -1,6 +1,7 @@
 var Drawer = function() {
     return {
         drawDriverInMap: drawDriverInMap,
+        drawIncidentInMap: drawIncidentInMap,
         drawTypesInList: drawTypesInList
     }
 
@@ -10,14 +11,27 @@ var Drawer = function() {
     function drawDriverInMap(driver, map) {
         console.log("Dibujando el repartidor: " + driver.id);
 
-        random = Math.floor(Math.random() * 3);
-        scoreIcon = random == 0 ? '⋆' : random == 1 ? '☆' : '★';
+        scoreIcon = Config.scoreIcon;
 		var info = driver.name + ' ' + scoreIcon.repeat(driver.score);
 		// Creamos un marker.
 		var p = L.marker(L.latLng(driver.positions[0].lat, driver.positions[0].lon))
 			.bindPopup(info);
 
 		p.addTo(map);
+    }
+    
+    /******************************************************************************
+     * Función para dibujar un incidente en un mapa.
+     */
+    function drawIncidentInMap(incident, map) {
+        console.log("Dibujando el incidente: " + incident.id);
+
+		var info = incident.type.description;
+		// Creamos un marker.		
+		var p = L.marker(L.latLng(incident.coordinate.lat, incident.coordinate.lon))
+			.bindPopup(info);
+
+		p.addTo(map);		
 	}
 
     /******************************************************************************

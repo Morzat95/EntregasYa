@@ -143,8 +143,6 @@
     <script>
         urlNormalizador = Config.urlNormalizador;
         urlEntregasYa = Config.urlEntregasYa;
-        // urlRepartidores = '/deliverydrivers/';
-        // urlPosiciones = '/positions/';
         urlRepartidores = Config.urlRepartidores;
         urlPosiciones = Config.urlPosiciones;
 
@@ -237,12 +235,6 @@
         var drawDriver = function (driver) {
             drawer.drawDriverInMap(driver, map);
         }
-
-        function log(response) {
-            ret = response.errorMessage ? response.errorMessage : response;
-            console.log(ret);
-        }
-
     </script>
 
 </body>

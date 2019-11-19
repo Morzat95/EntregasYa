@@ -48,13 +48,14 @@
 
     <script>
         urlEntregasYa = Config.urlEntregasYa;
-        // urlRequests = '/requests/';
         urlRequests = Config.urlRequests;
 
         map = createMap('mapid');
 
         tracker = new Tracker(map);
+        drawer = new Drawer();
 
+        // Pedidos
         requestPedidos()
             .then(extractPedidos)
             .then(requests => {
@@ -69,6 +70,29 @@
                         });
                 });
             });
+
+        // Tipos de incidente
+        requestIncidentsTypes()
+            .then(extractIncidentTypes)
+            .then(types => drawIncidentTypes(types));
+
+        // Incidentes
+        requestIncidents()
+            .then(extractIncidents)
+            .then(incidents => {
+                incidents.forEach(incident => {
+                    resolveIncidentType(incident)
+                        .then(drawIncident);
+                });
+            })
+
+        var drawIncident = function (incident) {
+            drawer.drawIncidentInMap(incident, map);
+        }
+
+        var drawIncidentTypes = function (incidentTypes) {
+            drawer.drawTypesInList(incidentTypes, 'types');
+        }
     </script>
 </body>
 </html>
