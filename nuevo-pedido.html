@@ -237,6 +237,15 @@
         var drawDriver = function (driver) {
             drawer.drawDriverInMap(driver, map);
         }
+
+        function autocompletarDireccion(input, node_id) {
+            $("#"+input).change(function() {
+                $("#"+node_id).val($(this).find(":selected").text());
+            });
+        }
+
+        autocompletarDireccion('DirectionsListOrigen', 'Origen');
+        autocompletarDireccion('DirectionsListDestino', 'Destino');
     </script>
 
 </body>
