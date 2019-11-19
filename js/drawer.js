@@ -28,7 +28,7 @@ var Drawer = function() {
 
 		var info = incident.type.description;
 		// Creamos un marker.		
-		var p = L.marker(L.latLng(incident.coordinate.lat, incident.coordinate.lon))
+		var p = L.marker(L.latLng(incident.coordinate.lat, incident.coordinate.lon),{icon:Config.getIncidentIcon(incident)})
 			.bindPopup(info);
 
 		p.addTo(map);		

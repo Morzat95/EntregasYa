@@ -15,5 +15,19 @@ var Config = {
     urlRequests: urlRequests,
     urlIncidents: urlIncidents,
     urlIncidentsTypes: urlIncidentsTypes,
-    scoreIcon: scoreIcon
+    scoreIcon: scoreIcon,
+
+
+    // Iconos por tipo de incidencia
+    getIncidentIcon: function(incident){
+        if( incident.type.description == "accident" ) {
+            return L.icon({iconUrl: 'assets/images/accidente.png', iconSize: [35, 35]});
+        }
+        else if ( incident.type.description == "congestion" ) {
+            return L.icon({iconUrl: 'assets/images/congestion.png', iconSize: [35, 35]});
+        }
+        else if( incident.type.description == "massive protest" ) {
+            return L.icon({iconUrl: 'assets/images/manifestacion.png', iconSize: [35, 35]});
+        }
+    }
 }
