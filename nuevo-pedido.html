@@ -41,7 +41,7 @@
             <h3>Solicitar pedido</h3>
         </div>
             
-        <!-- <form> -->
+        <form>
             <!--Pedido de direcciones-->
             <div class="form-group">
                 <div class="title">
@@ -51,7 +51,7 @@
                 <label for="">Direccion Origen</label>
                 <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" value="Loria 300, Lomas">
                 <span id="error-Origen"></span>
-                <button type="submit" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button>
+                <button type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button>
                 
                 <br>       
                 
@@ -62,7 +62,7 @@
                 <label for="">Direccion Destino</label>
                 <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas"/>
                 <span id="error-Destino"></span>
-                <button type="submit" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button>
+                <button type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button>
 
                 <div>
                     <select name="DirectionsList" id="DirectionsListDestino"></select>
@@ -117,7 +117,7 @@
                     </select>
 
                     <div class="listar-repartidores">
-                        <button class="btn btn-primary" onclick="obtenerRepartidoresDisponibles();">
+                        <button type="button" class="btn btn-primary" onclick="obtenerRepartidoresDisponibles();">
                             Listar Repartidores
                         </button>
                     </div>
@@ -131,7 +131,7 @@
                 <button type="submit" class="btn btn-primary">Crear pedido</button>
             </div>
 
-        <!-- </form> -->
+        </form>
     </div> <!-- Formulario -->
 
     <footer class="pie-pagina">
