@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
+
     <title>Entregas Ya</title>
 
     <link rel="import" href="layout.html">
@@ -19,93 +20,109 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <div id="nav-placeholder"></div>
 
     <!-- Content -->
     <div id="content">
-        <div class="form-title">
-            <h3>Solicitar pedido</h3>
+        <div id="form-title">
+            <h2>Por favor, complete los datos.</h2>
         </div>
-            
+
         <form>
             <!--Pedido de direcciones-->
             <div class="form-group">
                 <div class="title">
-                    <h3>Dirección</h3>
+                    <h4>Dirección</h4>
                 </div>
-   
-                <label for="">Direccion Origen</label>
-                <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas">
-                <span id="error-Origen"></span>
-                <!-- <button id="BtnOrigen" type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button> -->
-                <button id="BtnOrigen" type="button" class="btn btn-primary">Validar</button>
-                
-                <br>       
-                
-                <div>
-                    <select name="DirectionsList" id="DirectionsListOrigen"></select>
-                </div>
-                
-                <label for="">Direccion Destino</label>
-                <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas"/>
-                <span id="error-Destino"></span>
-                <!-- <button id="BtnDestino" type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button> -->
-                <button id="BtnDestino" type="button" class="btn btn-primary">Validar</button>
 
-                <div>
-                    <select name="DirectionsList" id="DirectionsListDestino"></select>
+                <div class="row">
+                    <div class="col">
+                        <label for="">Direccion Origen</label>
+                        <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas">
+                        <span id="error-Origen"></span>
+                        <!-- <button id="BtnOrigen" type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button> -->
+                        <button id="BtnOrigen" type="button" class="btn btn-primary">Validar</button>
+                        <div>
+                            <select name="DirectionsList" id="DirectionsListOrigen"></select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <label for="">Direccion Destino</label>
+                        <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" />
+                        <span id="error-Destino"></span>
+                        <!-- <button id="BtnDestino" type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button> -->
+                        <button id="BtnDestino" type="button" class="btn btn-primary">Validar</button>
+
+                        <div>
+                            <select name="DirectionsList" id="DirectionsListDestino"></select>
+                        </div>
+                    </div>
                 </div>
-            </div> <!--Pedido de direcciones-->
+            </div>
+            <!--Pedido de direcciones-->
 
             <!--Pedir datos de paquete-->
             <div class="form-group">
                 <div class="title">
-                    <h3>Datos de paquete</h3>
+                    <h4>Datos de paquete</h4>
                 </div>
-            
-                <label for="">Tipo</label>
-                <input class="form-control" autocomplete="off"/>
 
-                <label for="">Tamaño</label>
-                <input class="form-control" autocomplete="off"/>
-                      
-                <label for=""> Peso</label>
-                <input class="form-control" autocomplete="off"/>             
-            </div> <!--Pedir datos de paquete-->
+                <div class="row">
+                    <div class="col">
+                        <label for="">Tipo</label>
+                        <input class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col">
+                        <label for="">Tamaño</label>
+                        <input class="form-control" autocomplete="off" />
+                    </div>
+                    <div class="col">
+                        <label for=""> Peso</label>
+                        <input class="form-control" autocomplete="off" />
+                    </div>
+                </div>
+            </div>
+            <!--Pedir datos de paquete-->
 
             <!--Seleccionar repartidor-->
             <div class="form-group">
                 <div class="title">
-                    <h3>Seleccionar repartidor</h3>
+                    <h4>Seleccionar repartidor</h4>
                 </div>
 
+                <div class="row">
+                    <div class="col">
+                        <label for="">Cantidad de viajes</label>
+                        <select class="form-control">
+                            <option selected>Cantidad de viajes</option>
+                            <option value="1">menos de 50</option>
+                            <option value="2">mas de 50</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="">Tipo de vehiculo</label>
+                        <select class="form-control">
+                            <option selected>Tipo de vehiculo</option>
+                            <option value="1">Camioneta</option>
+                            <option value="2">Automovil</option>
+                            <option value="3">Bici</option>
+                            <option value="4">Otros</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="">Tiempo estimado de espera</label>
+                        <select class="form-control">
+                            <option selected>Tiempo de espera</option>
+                            <option value="1"> 1 - 30 min</option>
+                            <option value="2">30 - 60 min</option>
+                            <option value="3">más de 1 hora</option>
+                        </select>
+                    </div>
+                </div>
                 <div>
-                    <label for="">Cantidad de viajes</label>
-                    <select class="form-control">
-                        <option selected>Cantidad de viajes</option>
-                        <option value="1">menos de 50</option>
-                        <option value="2">mas de 50</option>
-                    </select>    
-
-                    <label for="">Tipo de vehiculo</label>
-                    <select class="form-control">
-                        <option selected>Tipo de vehiculo</option>
-                        <option value="1">Camioneta</option>
-                        <option value="2">Automovil</option>
-                        <option value="3">Bici</option>
-                        <option value="4">Otros</option>
-                    </select>
-
-                    <label for="">Tiempo estimado de espera</label>
-                    <select class="form-control">
-                        <option selected>Tiempo estimado de espera</option>
-                        <option value="1"> 1 - 30 min</option>
-                        <option value="2">30 - 60 min</option>
-                        <option value="3">más de 1 hora</option>
-                    </select>
-
                     <div class="listar-repartidores">
                         <!-- <button type="button" class="btn btn-primary" onclick="obtenerRepartidoresDisponibles();"> -->
                         <button id="BtnRepartidores" type="button" class="btn btn-primary">
@@ -115,15 +132,17 @@
                 </div>
 
                 <div id="map" style="width: 740px; height: 400px; background: #CCC;"></div>
-                
-            </div> <!--Seleccionar repartidor-->
+
+            </div>
+            <!--Seleccionar repartidor-->
 
             <div class="form-button">
                 <button type="submit" class="btn btn-primary">Crear pedido</button>
             </div>
 
         </form>
-    </div> <!-- Formulario -->
+    </div>
+    <!-- Formulario -->
 
     <footer class="pie-pagina">
         <div class="barra">
@@ -147,4 +166,5 @@
     <script src="js/nuevoPedido.js"></script>
 
 </body>
+
 </html>

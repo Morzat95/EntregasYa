@@ -3,24 +3,31 @@ body {
     font-family: 'Titillium Web', sans-serif;
 }
 
+
 /**--Formulario--**/
 
-/*  Contenido Principal*/
-body #content { 
+body #content {
     margin: auto;
 }
-#content{
+
+#content {
     background-color: #ffffff;
     height: 100%;
     width: 800px;
     padding: 20px;
 }
-.form-title {
+
+#form-title {
     display: flex;
     justify-content: center;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
 }
 
-/*  Grupo de datos*/
+#form-title h2 {
+    font-size: 30px;
+}
+
 .form-group {
     padding: 10px;
     border-bottom: 1px solid black;
@@ -30,8 +37,7 @@ body #content {
 .title {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .form-group label {
@@ -44,7 +50,8 @@ body #content {
     margin-bottom: 5px;
 }
 
-.form-group, .form-control {
+.form-group,
+.form-control {
     margin-bottom: 15px;
 }
 
@@ -54,40 +61,48 @@ body #content {
     margin-bottom: 15px;
 }
 
-.listar-repartidores{
+.listar-repartidores {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
 }
 
+
 /** LISTADO DE LOS REPARTIDORES **/
-#listado-repartidores, .lista, .lista-info {
+
+#listado-repartidores,
+.lista,
+.lista-info {
     height: 500px;
 }
 
-#listado-repartidores {    
+#listado-repartidores {
     background-color: cadetblue;
 }
-.lista, .lista-info {
+
+.lista,
+.lista-info {
     height: 500px;
 }
+
 .lista h4 {
     display: flex;
     justify-content: center;
     margin-top: 15px;
     background: grey;
 }
+
 .lista {
-    float: left;  
+    float: left;
     width: 25%;
     background-color: black;
 }
+
 .lista-info {
     float: right;
     width: 75%;
     background-color: lightgrey;
 }
-
 
 .lista ul li {
     color: white;
@@ -96,12 +111,9 @@ body #content {
 
 
 /** FOOTER **/
+
 .barra {
     width: 100%;
     height: 40px;
     background-color: #343a40;
 }
-
-
-
-
