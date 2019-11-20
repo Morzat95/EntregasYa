@@ -3,6 +3,7 @@ class Tracker {
     constructor (map) {
         this.map = map;
         this.drivers = {}
+        this.selectedDriverId = -1;
     }
 
     addDriver (driver) {
@@ -15,11 +16,18 @@ class Tracker {
         let marker = L.marker(driver.positions[0],{icon: Config.getDriverIcon(driver.id)});
         driverLayer.addLayer(marker.bindPopup(driver.name));
       
+        self = this;
         var updater = function (newPosition) {
             console.log("Updating view for driver: " + driver.name + "!!");
             console.log(newPosition);
 
             marker.setLatLng(newPosition);
+
+            // Para seguir al conductor
+            if (self.selectedDriverId == driver.id) {
+                let zoom = 16;
+                map.flyTo(newPosition, zoom);
+            }
         }
 
         this.drivers[driver.id] = driver;
@@ -32,5 +40,9 @@ class Tracker {
 
     getCurrentPosition(driver_id) {
         return this.drivers[driver_id].currentPosition();
+    }
+
+    followDriver(driver_id) {
+        this.selectedDriverId = driver_id;
     }
 }

@@ -34,7 +34,7 @@ var bootstrap = function () {
             return map;
         }, {});
     }
-    
+
 
 // -- Tipos de incidente --
     requestIncidentsTypes() // Pedimos los tipos de incidentes
@@ -77,7 +77,8 @@ var bootstrap = function () {
         father.click(function () {
             selectedOption = $(this).val();
             driver = pedidos[selectedOption].driver;
-            map.flyTo(tracker.getCurrentPosition(driver.id), 16);
+            // map.flyTo(tracker.getCurrentPosition(driver.id), 16);
+            tracker.followDriver(driver.id);
         });
 
         // Necesario para desplegar todas las opciones
