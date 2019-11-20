@@ -26,7 +26,7 @@ var Drawer = function() {
     function drawIncidentInMap(incident, map) {
         console.log("Dibujando el incidente: " + incident.id);
 
-		var info = incident.type.description;
+		var info = incident.type.description + " - Delay: " + incident.type.delay + "min";
 		// Creamos un marker.		
 		var p = L.marker(L.latLng(incident.coordinate.lat, incident.coordinate.lon),{icon:Config.getIncidentIcon(incident)})
 			.bindPopup(info);

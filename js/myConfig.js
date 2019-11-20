@@ -18,6 +18,17 @@ var Config = {
     scoreIcon: scoreIcon,
 
 
+
+    // Iconos por driver
+    getDriverIcon: function(driver_id) {
+        if( driver_id == 600 ) {
+          return L.icon({iconUrl: 'assets/images/vento.png', iconSize: [70,45]});
+        }
+        else if( driver_id == 105 ) {
+          return L.icon({iconUrl: 'assets/images/futuro.png', iconSize: [70,30]});
+        }
+      },
+
     // Iconos por tipo de incidencia
     getIncidentIcon: function(incident){
         if( incident.type.description == "accident" ) {
