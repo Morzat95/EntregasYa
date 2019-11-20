@@ -40,5 +40,14 @@ var Config = {
         else if( incident.type.description == "massive protest" ) {
             return L.icon({iconUrl: 'assets/images/manifestacion.png', iconSize: [35, 35]});
         }
+    },
+
+    // Ícono Destino
+    getDestinationIcon: function() {
+      return L.icon({iconUrl: 'assets/images/destination.png', iconSize: [70, 45]});
+    },
+    // Ícono Destino
+    getOriginIcon: function() {
+      return L.icon({iconUrl: 'assets/images/origin.png', iconSize: [70, 45]});
     }
 }

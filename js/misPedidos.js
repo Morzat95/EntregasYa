@@ -17,8 +17,8 @@ var bootstrap = function () {
 
             requests.forEach(request => { // A cada pedido...
 
-                drawer.drawMarkerInMap(`Origen pedido ${request.id}`, map, request.sender); // Dibujamos el origen del pedido
-                drawer.drawMarkerInMap(`Destino pedido ${request.id}`, map, request.receiver); // Dibujamos el destino del pedido
+                drawer.drawMarkerInMap(`Origen pedido ${request.id}`, map, request.sender, Config.getOriginIcon()); // Dibujamos el origen del pedido
+                drawer.drawMarkerInMap(`Destino pedido ${request.id}`, map, request.receiver, Config.getDestinationIcon()); // Dibujamos el destino del pedido
 
                 resolverRepartidor(request) // Le agregamos el repartidor
                     .then(request => {

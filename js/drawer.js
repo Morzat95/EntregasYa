@@ -12,7 +12,7 @@ var Drawer = function() {
     function drawDriverInMap(driver, map) {
         console.log("Dibujando el repartidor: " + driver.id);
 
-        info = driver.name + '<br>Score: ' + scoreIcon.repeat(driver.score);
+        info = driver.toString();
         coordinate = driver.positions[0];
         icon = Config.getDriverIcon(driver.id);
 

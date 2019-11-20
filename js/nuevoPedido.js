@@ -74,7 +74,10 @@ var bootstrap = function () {
         .then(function (drivers) {
             drivers.forEach(driver => { // Por cada repartidor...
                 resolverPosiciones(driver) // Pedimos sus posiciones
-                .then(drawDriver); // Lo dibujamos (primera posición)
+                .then(driver => {
+                    driver = new Driver(driver); // Lo mapeamos a nuestra clase
+                    drawDriver(driver);  // Lo dibujamos (primera posición)
+                });
             });
         });
         
