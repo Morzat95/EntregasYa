@@ -18,4 +18,8 @@ class Driver {
         }, 1000);
     }
 
+    currentPosition () {
+        return this.positions[this.currentIdx];
+    }
+
 }

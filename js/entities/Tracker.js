@@ -1,7 +1,8 @@
 class Tracker {
-    
+
     constructor (map) {
         this.map = map;
+        this.drivers = {}
     }
 
     addDriver (driver) {
@@ -21,9 +22,15 @@ class Tracker {
             marker.setLatLng(newPosition);
         }
 
+        this.drivers[driver.id] = driver;
+
         // New
         driver.run(updater);
 
         console.log(`Driver ${driver.id} added.`);
+    }
+
+    getCurrentPosition(driver_id) {
+        return this.drivers[driver_id].currentPosition();
     }
 }

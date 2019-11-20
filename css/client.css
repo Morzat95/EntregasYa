@@ -26,10 +26,15 @@ body {
   width: 25%;
 }
 
-#incidents {
+#incidents, #requests {
   margin: 7px 15px;
 }
 
 ul {
   
+}
+
+#PedidosSelect {
+  overflow: auto;
+  width: 150px;
 }
