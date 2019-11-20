@@ -31,7 +31,7 @@ class Tracker {
             }
         }
 
-        this.drivers[driver.id] = driver;
+        this.drivers[driver.id] = driver; // Nos guardamos el repartidor. Igual creo que al final no lo usamos... :D
 
         // New
         driver.run(updater);
@@ -39,14 +39,17 @@ class Tracker {
         console.log(`Driver ${driver.id} added.`);
     }
 
+    // Para obtener la posición actual del repartidor... Ya no lo usamos pero lo dejo por si me equivoco y se rompe todo :D
     getCurrentPosition(driver_id) {
         return this.drivers[driver_id].currentPosition();
     }
 
+    // Para seguir al repartidor con el mapa
     followDriver(driver_id) {
         this.selectedDriverId = driver_id;
     }
 
+    // Para dejar de seguir al repartidor con el mapa
     resetMapView() {
         this.selectedDriverId = -1;
     }
