@@ -18,6 +18,10 @@
         span {
             color: red;
         }
+        
+        .direction-list {
+            width: auto;
+        }
     </style>
 </head>
 
@@ -38,28 +42,24 @@
                     <h4>Dirección</h4>
                 </div>
 
-                <div class="row">
-                    <div class="col">
-                        <label for="">Direccion Origen</label>
-                        <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas">
-                        <span id="error-Origen"></span>
-                        <!-- <button id="BtnOrigen" type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button> -->
-                        <button id="BtnOrigen" type="button" class="btn btn-primary">Validar</button>
-                        <div>
-                            <select name="DirectionsList" id="DirectionsListOrigen"></select>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <label for="">Direccion Destino</label>
-                        <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" />
-                        <span id="error-Destino"></span>
-                        <!-- <button id="BtnDestino" type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button> -->
-                        <button id="BtnDestino" type="button" class="btn btn-primary">Validar</button>
+                <label for="">Direccion Origen</label>
+                <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas">
+                <span id="error-Origen"></span>
+                <!-- <button id="BtnOrigen" type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button> -->
+                <button id="BtnOrigen" type="button" class="btn btn-primary">Validar</button>
+                <div class="direction-list">
+                    <select name="DirectionsList" id="DirectionsListOrigen"></select>
+                </div>
 
-                        <div>
-                            <select name="DirectionsList" id="DirectionsListDestino"></select>
-                        </div>
-                    </div>
+                <br>
+
+                <label for="">Direccion Destino</label>
+                <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" />
+                <span id="error-Destino"></span>
+                <!-- <button id="BtnDestino" type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button> -->
+                <button id="BtnDestino" type="button" class="btn btn-primary">Validar</button>
+                <div class="direction-list">
+                    <select name="DirectionsList" id="DirectionsListDestino"></select>
                 </div>
             </div>
             <!--Pedido de direcciones-->
@@ -135,11 +135,9 @@
 
             </div>
             <!--Seleccionar repartidor-->
-
             <div class="form-button">
                 <button type="submit" class="btn btn-primary">Crear pedido</button>
             </div>
-
         </form>
     </div>
     <!-- Formulario -->
