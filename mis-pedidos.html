@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-     <!-- Required meta tags -->
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
@@ -15,7 +16,10 @@
     <!-- include leaflet -->
     <link rel="stylesheet" href="lib/leaflet/leaflet.css" />
 
+    <link rel="stylesheet" href="css/styles_pedidos.css">
+
 </head>
+
 <body>
     <!-- Navigation Bar -->
     <div id="nav-placeholder"></div>
@@ -28,21 +32,20 @@
 
         <!-- Incident Types -->
         <div id="right">
-            <div id="incidents">
-                <h2>Tipos de incidentes</h2>
-                <ul id="types"></ul>
-            </div>
             <div id="requests">
-                <h2>Pedidos</h2>
+                <h2 class="title">Tus pedidos</h2>
                 <select name="PedidosSelect" id="PedidosSelect"></select>
             </div>
+            <div id="incidents">
+                <h2 class="title">Tipos de incidentes</h2>
+                <ul id="types"></ul>
+            </div>
         </div>
-
     </div>
 
     <!-- Scripts -->
     <script src="lib/leaflet/leaflet.js"></script>
-    
+
     <!-- Include client -->
     <script src="js/entities/Driver.js"></script>
     <script src="js/entities/Tracker.js"></script>
@@ -52,4 +55,5 @@
     <script src="js/requests.js"></script>
     <script src="js/misPedidos.js"></script>
 </body>
+
 </html>

@@ -1,0 +1,37 @@
+.title {
+    text-align: center;
+    border-bottom: 1px solid black;
+    padding-bottom: 5px;
+}
+
+#PedidosSelect {
+    width: 100%;
+}
+
+#PedidosSelect option {
+    padding: 10px;
+}
+
+#types {
+    list-style: none;
+    padding-left: 0px;
+}
+
+#types li {
+    padding: 5px;
+    position: relative;
+    padding-left: 20px;
+}
+
+#types li::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    position: absolute;
+    background-image: url("/EntregasYa/assets/images/incident-icon-5.jpg");
+    background-size: cover;
+    background-position: center;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
