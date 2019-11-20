@@ -26,6 +26,8 @@ var Config = {
         }
         else if( driver_id == 105 ) {
           return L.icon({iconUrl: 'assets/images/futuro.png', iconSize: [70,30]});
+        } else {
+          return L.icon({iconUrl: 'assets/images/coche.png', iconSize: [70, 70]});
         }
       },
 
