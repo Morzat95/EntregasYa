@@ -46,56 +46,6 @@
     <script src="js/mapCreation.js"></script>
     <script src="js/drawer.js"></script>
     <script src="js/requests.js"></script>
-
-    <script>
-        urlEntregasYa = Config.urlEntregasYa;
-        urlRequests = Config.urlRequests;
-
-        map = createMap('mapid');
-
-        tracker = new Tracker(map);
-        drawer = new Drawer();
-
-        // Pedidos
-        requestPedidos()
-            .then(extractPedidos)
-            .then(requests => {
-                requests.forEach(request => {
-                    resolverRepartidor(request)
-                        .then(request => {
-                            resolverPosiciones(request.driver)
-                                .then(driver => {
-                                    driver = new Driver(driver);
-                                    tracker.addDriver(driver);
-                                });
-                        });
-                });
-            });
-
-        // Tipos de incidente
-        requestIncidentsTypes()
-            .then(extractIncidentTypes)
-            .then(types => drawIncidentTypes(types));
-
-            
-
-        // Incidentes
-        requestIncidents()
-            .then(extractIncidents)
-            .then(incidents => {
-                incidents.forEach(incident => {
-                    resolveIncidentType(incident)
-                        .then(drawIncident);
-                });
-            })
-
-        var drawIncident = function (incident) {
-            drawer.drawIncidentInMap(incident, map);
-        }
-
-        var drawIncidentTypes = function (incidentTypes) {
-            drawer.drawTypesInList(incidentTypes, 'types');
-        }
-    </script>
+    <script src="js/misPedidos.js"></script>
 </body>
 </html>

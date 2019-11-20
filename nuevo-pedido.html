@@ -39,7 +39,8 @@
                 <label for="">Direccion Origen</label>
                 <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas">
                 <span id="error-Origen"></span>
-                <button type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button>
+                <!-- <button id="BtnOrigen" type="button" class="btn btn-primary" onclick="normalizar('Origen')">Validar</button> -->
+                <button id="BtnOrigen" type="button" class="btn btn-primary">Validar</button>
                 
                 <br>       
                 
@@ -50,7 +51,8 @@
                 <label for="">Direccion Destino</label>
                 <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas"/>
                 <span id="error-Destino"></span>
-                <button type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button>
+                <!-- <button id="BtnDestino" type="button" class="btn btn-primary" onclick="normalizar('Destino')">Validar</button> -->
+                <button id="BtnDestino" type="button" class="btn btn-primary">Validar</button>
 
                 <div>
                     <select name="DirectionsList" id="DirectionsListDestino"></select>
@@ -105,7 +107,8 @@
                     </select>
 
                     <div class="listar-repartidores">
-                        <button type="button" class="btn btn-primary" onclick="obtenerRepartidoresDisponibles();">
+                        <!-- <button type="button" class="btn btn-primary" onclick="obtenerRepartidoresDisponibles();"> -->
+                        <button id="BtnRepartidores" type="button" class="btn btn-primary">
                             Listar Repartidores
                         </button>
                     </div>
@@ -141,112 +144,7 @@
     <script src="js/mapCreation.js"></script>
     <script src="js/drawer.js"></script>
     <script src="js/requests.js"></script>
-
-    <script>
-        urlNormalizador = Config.urlNormalizador;
-        urlEntregasYa = Config.urlEntregasYa;
-        urlRepartidores = Config.urlRepartidores;
-        urlPosiciones = Config.urlPosiciones;
-
-        // Mapa
-
-        map = createMap('map');
-
-        var drawer = new Drawer();
-
-        // Direcciones
-
-        function normalizar(id) {
-            address = document.getElementById(id).value;
-            requestAddress(address)
-                .then(response => checkAddress(response, id))
-                .then(extractAddress)
-                .then(address => populateAddressList(address, id));
-        }
-
-        var checkAddress = function (response, id) {
-            errorMessage = response['errorMessage'] ? response['errorMessage'] : '';
-            document.getElementById('error-'+id).innerHTML = errorMessage;
-            return response;
-        }
-
-        var populateAddressList = function (address, id) {
-            console.log('Generando Listado de Direcciones...');
-
-            list = $('#DirectionsList'+id);
-            list.empty();
-
-            address.forEach(direction => {
-                option = document.createElement('option');
-                option.value = option.textContent = direction.direccion;
-                list.append(option);
-            });
-        }
-
-        // Repartidores
-
-        function obtenerRepartidoresDisponibles() {
-
-            // Old
-            requestDrivers()
-            .then(extractDrivers)
-            .then(function (drivers) {
-                drivers.forEach(driver => {
-                    resolverPosiciones(driver)
-                    .then(drawDriver);
-                });
-            });
-            
-            // tracker = new Tracker(map);
-
-            // No funciona como se espera
-            // requestDrivers()
-            //     .then(extractDriver)
-            //     .then(function (drivers) {
-                //         drivers.forEach(driver => {
-                    //             resolverPosiciones(driver)
-                    //                 .then(function (driver) {
-                        //                     driver = new Driver(driver);
-                        //                     tracker.addDriver(driver);
-                        //                     // tracker.start();
-                        //                     console.log(`Driver ${driver.id} added.`);
-                        
-                        //                 })
-                        //         });
-                        //     })
-                        //     .then(function() {
-                            //         console.log('Fin.');
-                            //         // console.log(tracker.driversData);
-                            //         tracker.start();
-                            //     });
-                            
-            // New
-            // requestDrivers()
-            //     .then(extractDrivers)
-            //     .then(function (drivers) {
-            //         drivers.forEach(driver => {
-            //             resolverPosiciones(driver)
-            //                 .then(function (driver) {
-            //                     driver = new Driver(driver);
-            //                     tracker.addDriver(driver);
-            //                 });
-            //         });
-            //     });
-        }
-
-        var drawDriver = function (driver) {
-            drawer.drawDriverInMap(driver, map);
-        }
-
-        function autocompletarDireccion(input, node_id) {
-            $("#"+input).change(function() {
-                $("#"+node_id).val($(this).find(":selected").text());
-            });
-        }
-
-        autocompletarDireccion('DirectionsListOrigen', 'Origen');
-        autocompletarDireccion('DirectionsListDestino', 'Destino');
-    </script>
+    <script src="js/nuevoPedido.js"></script>
 
 </body>
 </html>
