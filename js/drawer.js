@@ -2,7 +2,8 @@ var Drawer = function() {
     return {
         drawDriverInMap: drawDriverInMap,
         drawIncidentInMap: drawIncidentInMap,
-        drawTypesInList: drawTypesInList
+        drawTypesInList: drawTypesInList,
+        drawMarkerInMap: drawMarkerInMap
     }
 
     /******************************************************************************
@@ -11,27 +12,48 @@ var Drawer = function() {
     function drawDriverInMap(driver, map) {
         console.log("Dibujando el repartidor: " + driver.id);
 
-        scoreIcon = Config.scoreIcon;
-		var info = driver.name + ' ' + scoreIcon.repeat(driver.score);
-		// Creamos un marker.
-		var p = L.marker(L.latLng(driver.positions[0].lat, driver.positions[0].lon))
-			.bindPopup(info);
+        info = driver.name + '<br>Score: ' + scoreIcon.repeat(driver.score);
+        coordinate = driver.positions[0];
+        icon = Config.getDriverIcon(driver.id);
 
-		p.addTo(map);
+        return drawMarkerInMap(info, map, coordinate, icon);
     }
     
     /******************************************************************************
      * Función para dibujar un incidente en un mapa.
      */
     function drawIncidentInMap(incident, map) {
-        console.log("Dibujando el incidente: " + incident.id);
+        console.log("Dibujando el incidente: " + incident.id);		
+        
+        info = incident.type.description + " - Delay: " + incident.type.delay + "min";
+        coordinate = incident.coordinate;
+        icon = Config.getIncidentIcon(incident);
 
-		var info = incident.type.description + " - Delay: " + incident.type.delay + "min";
-		// Creamos un marker.		
-		var p = L.marker(L.latLng(incident.coordinate.lat, incident.coordinate.lon),{icon:Config.getIncidentIcon(incident)})
-			.bindPopup(info);
+        return drawMarkerInMap(info, map, coordinate, icon);
+    }
+    
+    /******************************************************************************
+     * Función para dibujar una marker en un mapa.
+     */
+    function drawMarkerInMap(message, map, coordinate, icon) {
 
-		p.addTo(map);		
+        // Creamos un marker.
+        marker = L.marker(L.latLng(coordinate)).bindPopup(message);
+
+        if (icon)
+            marker.setIcon(icon)
+
+        // Esto solo funcionaría en desktop... Pero lo dejamos igual porque es más cómodo para testear :)
+        marker.on('mouseover', function (e) {
+            this.openPopup();
+        });
+        marker.on('mouseout', function (e) {
+            this.closePopup();
+        });
+
+        marker.addTo(map);
+
+        return marker;
 	}
 
     /******************************************************************************

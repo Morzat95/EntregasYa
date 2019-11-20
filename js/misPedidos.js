@@ -4,8 +4,8 @@ var bootstrap = function () {
 
     map = createMap('mapid'); // Creamos el mapa
 
-    tracker = new Tracker(map); // Instanciamos un trackeador
     drawer = new Drawer(); // Instanciamos al que sabe dibujar en el mapa
+    tracker = new Tracker(map, drawer); // Instanciamos un trackeador
 
 // -- Pedidos --
     requestPedidos() // Pedimos los pedidos
@@ -16,6 +16,10 @@ var bootstrap = function () {
             drawRequests(requests, 'PedidosSelect'); // Incluímos los pedidos en un select
 
             requests.forEach(request => { // A cada pedido...
+
+                drawer.drawMarkerInMap(`Origen pedido ${request.id}`, map, request.sender); // Dibujamos el origen del pedido
+                drawer.drawMarkerInMap(`Destino pedido ${request.id}`, map, request.receiver); // Dibujamos el destino del pedido
+
                 resolverRepartidor(request) // Le agregamos el repartidor
                     .then(request => {
                         resolverPosiciones(request.driver) // Pedimos las posiciones del repartidor
@@ -63,7 +67,7 @@ var bootstrap = function () {
 
     var drawRequests = function (requests, nodeId) {
         console.log('Dibujando requests en select');
-        father = $('#'+nodeId);
+        father = $('#'+nodeId); // Select
 
         // Creamos la opción y la asignamos al select
         requests.forEach(request => {
@@ -84,6 +88,11 @@ var bootstrap = function () {
         // Necesario para desplegar todas las opciones
         father.attr('size', requests.length);
     }
+
+    // Si arrastra el mapa dejamos de seguir al conductor
+    map.on('dragend', function () {
+        tracker.resetMapView();
+    });
 
 }
 

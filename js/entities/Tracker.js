@@ -1,7 +1,8 @@
 class Tracker {
 
-    constructor (map) {
+    constructor (map, drawer) {
         this.map = map;
+        this.drawer = drawer;
         this.drivers = {}
         this.selectedDriverId = -1;
     }
@@ -13,8 +14,8 @@ class Tracker {
         this.map.layersControl.addOverlay(driverLayer, driver.name);
 
         // Agregamos el marker del repartidor
-        let marker = L.marker(driver.positions[0],{icon: Config.getDriverIcon(driver.id)});
-        driverLayer.addLayer(marker.bindPopup(driver.name));
+        let marker = this.drawer.drawDriverInMap(driver, map);
+        driverLayer.addLayer(marker);
       
         self = this;
         var updater = function (newPosition) {
@@ -44,5 +45,9 @@ class Tracker {
 
     followDriver(driver_id) {
         this.selectedDriverId = driver_id;
+    }
+
+    resetMapView() {
+        this.selectedDriverId = -1;
     }
 }
