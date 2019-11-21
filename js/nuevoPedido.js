@@ -12,15 +12,41 @@ var bootstrap = function () {
 
 // -- Direcciones --
 
+// Nueva versión del normalizador =========================================================
+    // Normalizamos las direcciones después de que el usuario deja de tipear en X cantidad de tiempo
+    keyupHandlerNormalizar('Origen');
+    keyupHandlerNormalizar('Destino');
+
+    function keyupHandlerNormalizar(nodeId) {
+        ms = 500;
+        $('#'+nodeId).keyup(delay(function(e) {
+            // console.log('Time elapsed!', this.value);
+            normalizar(nodeId);
+        }, ms));
+    }
+
+    // Función que me permite ejecutar una función pasada como parámetro después de X tiempo
+    function delay(fn, ms) {
+        let timer = 0;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(fn.bind(this, ...args), ms || 0);
+        }
+    }
+// ========================================================================================
+
+// Vieja versión del normalizador =========================================================
     // Normalizamos las direcciones cuando se hace click en los respectivos botones
-    clickHandlerNormalizar('Origen');
-    clickHandlerNormalizar('Destino');
+    // clickHandlerNormalizar('Origen');
+    // clickHandlerNormalizar('Destino');
 
     function clickHandlerNormalizar(nodeId) {
         $('#Btn'+nodeId).click(function(){
             normalizar(nodeId);
         });
     }
+
+// ========================================================================================
     
     function normalizar(id) {
         address = document.getElementById(id).value; // Obtenemos la dirección ingresada por el usuario
