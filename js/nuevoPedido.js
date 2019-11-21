@@ -50,6 +50,7 @@ var bootstrap = function () {
     
     function normalizar(id) {
         address = document.getElementById(id).value; // Obtenemos la dirección ingresada por el usuario
+
         requestAddress(address) // Pedimos una dirección
         .then(response => checkAddress(response, id)) // Verificamos si hay que mostrar o no un mensaje de error
         .then(extractAddress) // Extraemos las posibles direcciones
@@ -57,8 +58,16 @@ var bootstrap = function () {
     }
     
     var checkAddress = function (response, id) {
-        errorMessage = response['errorMessage'] ? response['errorMessage'] : '';
+        errorMessage = response['errorMessage'] ? response['errorMessage'] : ''; // cambiar '' por undefined
         document.getElementById('error-'+id).innerHTML = errorMessage;
+
+        // Le agregamos animación y color para que quede más lindo :D
+        existError = errorMessage != '';
+        
+        inputField = document.getElementById(id);
+        inputField.classList.toggle("is-valid", !existError); // Si no existe el error lo coloreamos como válido
+        inputField.classList.toggle("is-invalid", existError); // Si existe el error lo coloreamos como inválido
+
         return response;
     }
 
@@ -68,11 +77,21 @@ var bootstrap = function () {
         list = $('#DirectionsList'+id);
         list.empty();
 
+        // Si no hay resultados ocultamos el select
+        if (address.length <= 0) {
+            list.hide("slow");
+            return;
+        }
+
         address.forEach(direction => {
             option = document.createElement('option');
             option.value = option.textContent = direction.direccion;
             list.append(option);
         });
+
+        // Desplegamos toda la lista
+        list.attr('size', address.length);
+        list.show("slow");
     }
 
     // Reemplazamos el input con la dirección seleccionada por el usuario
@@ -80,8 +99,14 @@ var bootstrap = function () {
     autocompletarDireccion('DirectionsListDestino', 'Destino');
 
     function autocompletarDireccion(input, node_id) {
-        $("#"+input).change(function() {
+        // $("#"+input).change(function() {
+        //     $("#"+node_id).val($(this).find(":selected").text());
+        // });
+
+        // Cambiamos 'change' por 'click'
+        $("#"+input).click(function() {
             $("#"+node_id).val($(this).find(":selected").text());
+            $(this).hide("slow");
         });
     }
 
