@@ -29,7 +29,7 @@
             <h2>Por favor, complete los datos.</h2>
         </div>
 
-        <form>
+        <form id="form">
             <!--Pedido de direcciones-->
             <div class="form-group">
                 <div class="title">
@@ -37,7 +37,7 @@
                 </div>
 
                 <label for="">Direccion Origen</label>
-                <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas">
+                <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" required>
                 <span id="error-Origen" class="text-danger"></span>
                 <div class="direction-list">
                     <select name="DirectionsList" id="DirectionsListOrigen" class="form-control"></select>
@@ -46,7 +46,7 @@
                 <br>
 
                 <label for="">Direccion Destino</label>
-                <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" />
+                <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" required>
                 <span id="error-Destino" class="text-danger"></span>
                 <div class="direction-list">
                     <select name="DirectionsList" id="DirectionsListDestino" class="form-control"></select>
@@ -63,7 +63,7 @@
                 <div class="row">
                     <div class="col">
                         <label for="">Tipo</label><br>
-                        <input class="form-control" autocomplete="off" />
+                        <input class="form-control" autocomplete="off" required />
                     </div>
                     <!-- <div class="col">
                         <label for="">Tamaño</label><br>
@@ -72,28 +72,28 @@
                     <div class="col">
                         <label for="">Alto</label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0">
+                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Ancho</label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0">
+                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Largo</label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0">
+                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Peso </label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0">
+                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">kg</span>
                         </span>
                     </div>

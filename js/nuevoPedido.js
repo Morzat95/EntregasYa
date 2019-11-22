@@ -140,6 +140,12 @@ var bootstrap = function () {
         drawer.drawDriverInMap(driver, map);
     }
 
+    // Emitimos una notificación cuando se crea un pedido
+    $( "#form" ).submit(function( event ) {
+        alert( "Su pedido ha sido creado con éxito." );
+        event.preventDefault();
+    });
+
 }
 
 $(document).ready(function() {
