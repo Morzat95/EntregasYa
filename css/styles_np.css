@@ -61,10 +61,53 @@ body #content {
     margin-bottom: 15px;
 }
 
+.direction-list {
+    width: auto;
+}
+
 .listar-repartidores {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
+}
+
+#DirectionsListOrigen, #DirectionsListDestino {
+    overflow: auto;
+    width: 100%;
+    display: none; /* Inicialmente los escondemos */
+}
+
+/*test*/
+.unit-input {
+    border: #DFDFDF solid 1px;
+    display: inline-flex;
+    border-radius: 4px;
+    overflow: hidden;
+    font-family: sans-serif;
+    width: 10em;
+}
+  
+.unit-input__input {
+    border: 0;
+    padding: .5em;
+    font-size: 1em;
+    width: 100%;
+}
+
+.unit-input__input:focus {
+    background: #EDFFFB;
+    outline: none;
+}
+
+.unit-input__append {
+    background: #F4F4F4;
+    padding: .5em;
+    border: #DFDFDF solid 0;
+    flex-grow: 0;
+}
+
+.unit-input__append {
+    border-left-width: 1px;
 }
 
 
@@ -107,6 +150,13 @@ body #content {
 .lista ul li {
     color: white;
     margin-bottom: 15px;
+}
+
+/* Mapa */
+#map {
+    width: 740px;
+    height: 400px;
+    background: #CCC;
 }
 
 

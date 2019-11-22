@@ -2,9 +2,9 @@ var bootstrap = function () {
     urlEntregasYa = Config.urlEntregasYa;
     urlRequests = Config.urlRequests;
 
-    map = createMap('mapid'); // Creamos el mapa
+    map = createMap('mapid', Config.ungsLocation); // Creamos el mapa
 
-    drawer = new Drawer(); // Instanciamos al que sabe dibujar en el mapa
+    drawer = new Drawer(); // Instanciamos al que sabe dibujar en el mapa y la página
     tracker = new Tracker(map, drawer); // Instanciamos un trackeador
 
 // -- Pedidos --
@@ -13,7 +13,7 @@ var bootstrap = function () {
         .then(requests => {
 
             pedidos = mapearPedidos(requests); // Mapeamos los pedidos para usarlos posteriormente
-            drawRequests(requests, 'PedidosSelect'); // Incluímos los pedidos en un select
+            drawer.drawRequests(requests, 'PedidosSelect'); // Incluímos los pedidos en un select
 
             requests.forEach(request => { // A cada pedido...
 
@@ -65,28 +65,16 @@ var bootstrap = function () {
         drawer.drawTypesInList(incidentTypes, 'types');
     }
 
-    var drawRequests = function (requests, nodeId) {
-        console.log('Dibujando requests en select');
-        father = $('#'+nodeId); // Select
+    // Cuando selecciona un request se actualiza la vista del mapa
+    setMapViewUpdater();
 
-        // Creamos la opción y la asignamos al select
-        requests.forEach(request => {
-            option = $('<option/>');
-            option.attr({ 'value': request.id }).text(`Pedido: ${request.id}`);
-
-            father.append(option);
-        });
-
-        // Cuando selecciona una opción se actualiza la vista del mapa
-        father.click(function () {
+    function setMapViewUpdater() {
+        select = $('#PedidosSelect');
+        select.click(function () {
             selectedOption = $(this).val();
             driver = pedidos[selectedOption].driver;
-            // map.flyTo(tracker.getCurrentPosition(driver.id), 16);
             tracker.followDriver(driver.id);
         });
-
-        // Necesario para desplegar todas las opciones
-        father.attr('size', requests.length);
     }
 
     // Si arrastra el mapa dejamos de seguir al conductor
