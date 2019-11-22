@@ -142,7 +142,13 @@ var bootstrap = function () {
 
     // Emitimos una notificación cuando se crea un pedido
     $( "#form" ).submit(function( event ) {
-        alert( "Su pedido ha sido creado con éxito." );
+
+        origenValido = $( "#Origen" ).hasClass( "is-valid" );
+        destinoValido = $( "#Destino" ).hasClass( "is-valid" );
+
+        if (origenValido && destinoValido)
+            alert( "Su pedido ha sido creado con éxito." );
+            
         event.preventDefault();
     });
 
