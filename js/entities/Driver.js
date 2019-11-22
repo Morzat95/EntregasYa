@@ -26,7 +26,8 @@ class Driver {
 
 // Sobreescribimos el método toString
 Driver.prototype.toString = function driverToString() {
-    return `Nombre: ${this.name}<br>
+    return `ID: ${this.id}<br>
+            Nombre: ${this.name}<br>
             Score: ${scoreIcon.repeat(this.score)}<br>
             Vehículo<br>
             * Modelo: ${this.car.description}<br>
