@@ -1,7 +1,6 @@
 .container-fluid {
     background-color: rgba(255, 255, 255, 0.89);
-    /*height: 835px;*/
-    height: 90%;
+    height: 500px;
     margin-top: auto;
     margin-bottom: auto;
     margin: 0%;
@@ -37,11 +36,28 @@
 #image {
     background-image: url("../assets/images/repartidor.png");
     background-repeat: no-repeat;
-    height: 400px;
+    height: 500px;
     width: 600px;
 }
 
 footer {
-    position: relative;
+    position: absolute;
     width: 100%;
+}
+
+.options {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btn-circle {
+    color: white;
+    width: 150px;
+    height: 150px;
+    border-radius: 80px;
+    padding: 50px;
+    background-color: #14CCCC;
+    border: none;
+    box-shadow: ;
+    margin: auto;
 }
