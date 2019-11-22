@@ -6,7 +6,7 @@ var bootstrap = function () {
 
 // -- Mapa --
 
-    map = createMap('map'); // Creamos el mapa
+    map = createMap('map', Config.ungsLocation); // Creamos el mapa
 
     var drawer = new Drawer(); // Componente que sabe dibujar en un mapa
 
@@ -54,7 +54,7 @@ var bootstrap = function () {
         requestAddress(address) // Pedimos una dirección
         .then(response => checkAddress(response, id)) // Verificamos si hay que mostrar o no un mensaje de error
         .then(extractAddress) // Extraemos las posibles direcciones
-        .then(address => populateAddressList(address, id)); // Mostramos las opciones al usuario
+        .then(address => populateAddress(address, id)); // Mostramos las opciones al usuario
     }
     
     var checkAddress = function (response, id) {
@@ -71,30 +71,7 @@ var bootstrap = function () {
         return response;
     }
 
-    var populateAddressList = function (address, id) {
-        console.log('Generando Listado de Direcciones...');
-
-        list = $('#DirectionsList'+id);
-        list.empty();
-
-        // Si no hay resultados ocultamos el select
-        if (address.length <= 0) {
-            list.hide("slow");
-            return;
-        }
-
-        address.forEach(direction => {
-            option = document.createElement('option');
-            option.value = option.textContent = direction.direccion;
-            list.append(option);
-        });
-
-        // Desplegamos toda la lista
-        list.attr('size', address.length);
-        list.show("slow");
-    }
-
-    // Reemplazamos el input con la dirección seleccionada por el usuario
+    // Reemplazamos el input con la dirección seleccionada por el usuario y escondemos el resto
     autocompletarDireccion('DirectionsListOrigen', 'Origen');
     autocompletarDireccion('DirectionsListDestino', 'Destino');
 
@@ -155,6 +132,9 @@ var bootstrap = function () {
                         //     });
     }
 
+    var populateAddress = function (address, id) {
+        drawer.populateAddressList(address, 'DirectionsList'+id);
+    }
     
     var drawDriver = function (driver) {
         drawer.drawDriverInMap(driver, map);

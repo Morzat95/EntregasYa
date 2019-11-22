@@ -6,6 +6,7 @@ urlRequests = '/requests/';
 urlIncidents = '/incidents/';
 urlIncidentsTypes = '/incidenttypes/';
 scoreIcon = '★';
+ungsLocation = [-34.5221554, -58.7000067];
 
 var Config = {
     urlNormalizador: urlNormalizador,
@@ -16,7 +17,7 @@ var Config = {
     urlIncidents: urlIncidents,
     urlIncidentsTypes: urlIncidentsTypes,
     scoreIcon: scoreIcon,
-
+    ungsLocation: ungsLocation,
 
 
     // Iconos por driver

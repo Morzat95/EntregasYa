@@ -3,13 +3,15 @@ var Drawer = function() {
         drawDriverInMap: drawDriverInMap,
         drawIncidentInMap: drawIncidentInMap,
         drawTypesInList: drawTypesInList,
-        drawMarkerInMap: drawMarkerInMap
+        drawMarkerInMap: drawMarkerInMap,
+        populateAddressList: populateAddressList,
+        drawRequests: drawRequests
     }
 
     /******************************************************************************
      * Función para dibujar un repartidor en un mapa.
      */
-    function drawDriverInMap(driver, map) {
+    function drawDriverInMap (driver, map) {
         console.log("Dibujando el repartidor: " + driver.id);
 
         info = driver.toString();
@@ -22,7 +24,7 @@ var Drawer = function() {
     /******************************************************************************
      * Función para dibujar un incidente en un mapa.
      */
-    function drawIncidentInMap(incident, map) {
+    function drawIncidentInMap (incident, map) {
         console.log("Dibujando el incidente: " + incident.id);		
         
         info = incident.type.description + " - Delay: " + incident.type.delay + "min";
@@ -35,7 +37,7 @@ var Drawer = function() {
     /******************************************************************************
      * Función para dibujar una marker en un mapa.
      */
-    function drawMarkerInMap(message, map, coordinate, icon) {
+    function drawMarkerInMap (message, map, coordinate, icon) {
 
         // Creamos un marker.
         marker = L.marker(L.latLng(coordinate)).bindPopup(message);
@@ -59,11 +61,56 @@ var Drawer = function() {
     /******************************************************************************
      * Función para listar los tipos de incidente en la página.
      */
-    function drawTypesInList(types, nodeId) {
+    function drawTypesInList (types, nodeId) {
 		types.forEach(function(type) {
             var li = $('<li>');
             li.append(type.description + " (" + type.delay +")");
             $("#"+nodeId).append(li);
         });
+    }
+
+    /******************************************************************************
+     * Función para mostrar las opciones para la dirección normalizada en la página.
+     */
+    function populateAddressList (address, id) {
+        console.log('Generando Listado de Direcciones...');
+
+        list = $('#'+id);
+        list.empty();
+
+        // Si no hay resultados ocultamos el select
+        if (address.length <= 0) {
+            list.hide("slow");
+            return;
+        }
+
+        address.forEach(direction => {
+            option = document.createElement('option');
+            option.value = option.textContent = direction.direccion;
+            list.append(option);
+        });
+
+        // Desplegamos toda la lista
+        list.attr('size', address.length);
+        list.show("slow");
+    }
+
+    /******************************************************************************
+     * Función para listar los pedidos en la página.
+     */
+    function drawRequests (requests, nodeId) {
+        console.log('Dibujando requests en select');
+        father = $('#'+nodeId); // Select
+
+        // Creamos la opción y la asignamos al select
+        requests.forEach(request => {
+            option = $('<option/>');
+            option.attr({ 'value': request.id }).text(`Pedido: ${request.id}`);
+
+            father.append(option);
+        });
+
+        // Necesario para desplegar todas las opciones
+        father.attr('size', requests.length);
     }
 }
