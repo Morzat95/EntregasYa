@@ -1,0 +1,47 @@
+.container-fluid {
+    background-color: rgba(255, 255, 255, 0.89);
+    /*height: 835px;*/
+    height: 90%;
+    margin-top: auto;
+    margin-bottom: auto;
+    margin: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title {
+    margin-bottom: 20px;
+}
+
+.title h2 {
+    color: #4a4a4a;
+    font-size: 32px;
+    text-transform: uppercase;
+    border-bottom: 5px solid #14CCCC;
+}
+
+.title p {
+    color: #878787;
+    font-size: 15px;
+}
+
+.btn {
+    background-color: #14CCCC;
+    border: none;
+    border-radius: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#image {
+    background-image: url("../assets/images/repartidor.png");
+    background-repeat: no-repeat;
+    height: 400px;
+    width: 600px;
+}
+
+footer {
+    position: relative;
+    width: 100%;
+}
