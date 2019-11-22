@@ -11,14 +11,20 @@ var Drawer = function() {
     /******************************************************************************
      * Función para dibujar un repartidor en un mapa.
      */
-    function drawDriverInMap (driver, map) {
+    function drawDriverInMap (driver, map, callback) {
         console.log("Dibujando el repartidor: " + driver.id);
 
         info = driver.toString();
         coordinate = driver.positions[0];
         icon = Config.getDriverIcon(driver.id);
 
-        return drawMarkerInMap(info, map, coordinate, icon);
+        // return drawMarkerInMap(info, map, coordinate, icon);
+        marker = drawMarkerInMap(info, map, coordinate, icon);
+
+        if (callback)
+            marker.on('click', callback(driver.id));
+
+        return marker;
     }
     
     /******************************************************************************

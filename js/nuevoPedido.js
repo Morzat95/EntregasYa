@@ -137,7 +137,14 @@ var bootstrap = function () {
     }
     
     var drawDriver = function (driver) {
-        drawer.drawDriverInMap(driver, map);
+        // drawer.drawDriverInMap(driver, map);
+        drawer.drawDriverInMap(driver, map, informarRepartidorSeleccionado);
+    }
+
+    function informarRepartidorSeleccionado(driverId) {
+        return function (e) {
+            alert(`Repartidor ${driverId} seleccionado`);
+        }
     }
 
     // Emitimos una notificación cuando se crea un pedido
