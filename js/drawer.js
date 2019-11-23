@@ -1,4 +1,7 @@
 var Drawer = function() {
+    
+    var markers = {};
+    
     return {
         drawDriverInMap: drawDriverInMap,
         drawIncidentInMap: drawIncidentInMap,
@@ -22,9 +25,26 @@ var Drawer = function() {
         marker = drawMarkerInMap(info, map, coordinate, icon);
 
         if (callback)
-            marker.on('click', callback(driver.id));
+            marker.on('click', cleanDrivers(driver.id, callback(driver.id)));
+
+        // markers.push({key: driver.id, value: marker});
+        markers[`${driver.id}`] = marker;
+        
 
         return marker;
+    }
+
+    function cleanDrivers(driverSelected, callback) {
+
+        return function (e) {
+            for (var driverId in markers) {
+                if (driverId != driverSelected)
+                    map.removeLayer(markers[driverId]);
+            }
+    
+            callback;
+        }
+
     }
     
     /******************************************************************************
