@@ -4,6 +4,9 @@ var bootstrap = function () {
     urlRepartidores = Config.urlRepartidores;
     urlPosiciones = Config.urlPosiciones;
 
+    originAddress = null;
+    destinationAddress = null;
+
 // -- Mapa --
 
     map = createMap('map', Config.ungsLocation); // Creamos el mapa
@@ -33,20 +36,6 @@ var bootstrap = function () {
             timer = setTimeout(fn.bind(this, ...args), ms || 0);
         }
     }
-// ========================================================================================
-
-// Vieja versión del normalizador =========================================================
-    // Normalizamos las direcciones cuando se hace click en los respectivos botones
-    // clickHandlerNormalizar('Origen');
-    // clickHandlerNormalizar('Destino');
-
-    function clickHandlerNormalizar(nodeId) {
-        $('#Btn'+nodeId).click(function(){
-            normalizar(nodeId);
-        });
-    }
-
-// ========================================================================================
     
     function normalizar(id) {
         address = document.getElementById(id).value; // Obtenemos la dirección ingresada por el usuario
@@ -54,7 +43,10 @@ var bootstrap = function () {
         requestAddress(address) // Pedimos una dirección
         .then(response => checkAddress(response, id)) // Verificamos si hay que mostrar o no un mensaje de error
         .then(extractAddress) // Extraemos las posibles direcciones
-        .then(address => populateAddress(address, id)); // Mostramos las opciones al usuario
+        .then(address => {
+            addresses = mapearDirecciones(address); // Mapeamos las direcciones para usarlas posteriormente
+            populateAddress(address, id); // Mostramos las opciones al usuario
+        });
     }
     
     var checkAddress = function (response, id) {
@@ -72,18 +64,27 @@ var bootstrap = function () {
     }
 
     // Reemplazamos el input con la dirección seleccionada por el usuario y escondemos el resto
-    autocompletarDireccion('DirectionsListOrigen', 'Origen');
-    autocompletarDireccion('DirectionsListDestino', 'Destino');
-
-    function autocompletarDireccion(input, node_id) {
-        // $("#"+input).change(function() {
-        //     $("#"+node_id).val($(this).find(":selected").text());
-        // });
-
-        // Cambiamos 'change' por 'click'
+    autocompletarDireccionOrigen();
+    autocompletarDireccionDestino();
+    
+    function autocompletarDireccionOrigen() {
+        autocompletarDireccion('DirectionsListOrigen', 'Origen', 'Origen');
+    }
+    
+    function autocompletarDireccionDestino() {
+        autocompletarDireccion('DirectionsListDestino', 'Destino', 'Destino');
+    }
+    
+    function autocompletarDireccion(input, node_id, addressType) {
         $("#"+input).click(function() {
             $("#"+node_id).val($(this).find(":selected").text());
             $(this).hide("slow");
+
+            // Dibujamos la dirección en el mapa
+            cod_calle = $(this).find(":selected").val();
+            direccionSeleccionada = addresses[cod_calle];
+            direccionSeleccionada.addressType = addressType;
+            drawer.drawAddressInMap(direccionSeleccionada, map);
         });
     }
 

@@ -1,6 +1,8 @@
 var Drawer = function() {
     
     var markers = {};
+    var originMarker;
+    var destinationMarker;
     
     return {
         drawDriverInMap: drawDriverInMap,
@@ -8,7 +10,8 @@ var Drawer = function() {
         drawTypesInList: drawTypesInList,
         drawMarkerInMap: drawMarkerInMap,
         populateAddressList: populateAddressList,
-        drawRequests: drawRequests
+        drawRequests: drawRequests,
+        drawAddressInMap: drawAddressInMap
     }
 
     /******************************************************************************
@@ -58,6 +61,39 @@ var Drawer = function() {
         icon = Config.getIncidentIcon(incident);
 
         return drawMarkerInMap(info, map, coordinate, icon);
+    }
+
+    /******************************************************************************
+     * Función para dibujar una dirección en un mapa.
+     */
+    function drawAddressInMap (address, map) {
+        console.log("Dibujando la dirección: " + address.cod_calle);		
+        
+        info = address.direccion;
+        coordinate = {'lat': address.coordenadas.y, 'lon': address.coordenadas.x};
+        console.log(coordinate);
+        
+        marker = drawMarkerInMap(info, map, coordinate);
+        
+        // Guardo la referencia al marker
+        if (address.addressType == 'Origen') {
+            
+            if (originMarker)
+                map.removeLayer(originMarker);
+            
+            originMarker = marker
+            // icon = Config.getOriginIcon(address); TODO
+        }
+        else if (address.addressType == 'Destino') {
+            
+            if (destinationMarker)
+                map.removeLayer(destinationMarker);
+            
+            destinationMarker = marker;
+            // icon = Config.getDestinationIcon(address); TODO
+        }
+
+        return marker;
     }
     
     /******************************************************************************
@@ -112,7 +148,8 @@ var Drawer = function() {
 
         address.forEach(direction => {
             option = document.createElement('option');
-            option.value = option.textContent = direction.direccion;
+            option.value = direction.cod_calle;
+            option.textContent = direction.direccion;
             list.append(option);
         });
 

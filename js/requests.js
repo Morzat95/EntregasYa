@@ -1,5 +1,5 @@
 var requestAddress = function (address) {
-    return $.ajax(urlNormalizador + address);
+    return $.ajax(urlNormalizador + address + '&geocodificar=TRUE'); // Quiero siempre las coordenadas
 }
 
 function requestDrivers(driver_id) {

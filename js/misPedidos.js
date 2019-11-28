@@ -31,14 +31,6 @@ var bootstrap = function () {
             });
         });
 
-    // Mapear pedidos
-    function mapearPedidos(requests) {
-        return requests.reduce(function(map, obj) {
-            map[obj.id] = obj;
-            return map;
-        }, {});
-    }
-
 
 // -- Tipos de incidente --
     requestIncidentsTypes() // Pedimos los tipos de incidentes
