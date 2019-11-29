@@ -61,39 +61,52 @@
                 </div>
 
                 <div class="row">
-                    <div class="col">
-                        <label for="">Tipo</label><br>
-                        <input class="form-control" autocomplete="off" required />
-                    </div>
+                    <label for="">Tipo</label>
+                    <select class="form-control">
+                        <option value="paquete">Paquete</option>
+                        <option value="tubo">Tubo</option>
+                    </select>
+                    <!--<input class="form-control" autocomplete="off" required />-->
+                </div>
+
+                <div class="row">
                     <div class="col">
                         <label for="">Alto</label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
+                            <input id="alto" class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Ancho</label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
+                            <input id="ancho" class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Largo</label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
+                            <input id="largo" class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">mts</span>
                         </span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div id="calculo" class="col">
+                        <label for="">Calcular Peso</label><br>
+                        <button id="BtnCalcularPeso" type="button" class="btn btn-primary">Calcular</button>
                     </div>
                     <div class="col">
                         <label for="">Peso </label><br>
                         <span class="unit-input">
-                            <input class="unit-input__input" type="number" step="0.1" min="0" required>
+                            <input id="peso" class="unit-input__input" type="number" step="0.1" min="0" required>
                             <span class="unit-input__append">kg</span>
                         </span>
                     </div>
                 </div>
+
             </div>
             <!--Pedir datos de paquete-->
 
@@ -150,13 +163,13 @@
         </form>
     </div>
     <!-- Formulario -->
-    
+
     <!-- Pie de página -->
     <div id="footer-placeholder"></div>
 
 
     <!-- Scripts -->
-    
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="lib/jquery-3.1.1.min.js"></script>

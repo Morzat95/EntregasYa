@@ -71,13 +71,17 @@ body #content {
     margin-bottom: 15px;
 }
 
-#DirectionsListOrigen, #DirectionsListDestino {
+#DirectionsListOrigen,
+#DirectionsListDestino {
     overflow: auto;
     width: 100%;
-    display: none; /* Inicialmente los escondemos */
+    display: none;
+    /* Inicialmente los escondemos */
 }
 
+
 /*test*/
+
 .unit-input {
     border: #DFDFDF solid 1px;
     display: inline-flex;
@@ -86,7 +90,7 @@ body #content {
     font-family: sans-serif;
     width: 10em;
 }
-  
+
 .unit-input__input {
     border: 0;
     padding: .5em;
@@ -111,50 +115,22 @@ body #content {
 }
 
 
-/** LISTADO DE LOS REPARTIDORES **/
-
-#listado-repartidores,
-.lista,
-.lista-info {
-    height: 500px;
-}
-
-#listado-repartidores {
-    background-color: cadetblue;
-}
-
-.lista,
-.lista-info {
-    height: 500px;
-}
-
-.lista h4 {
-    display: flex;
-    justify-content: center;
-    margin-top: 15px;
-    background: grey;
-}
-
-.lista {
-    float: left;
-    width: 25%;
-    background-color: black;
-}
-
-.lista-info {
-    float: right;
-    width: 75%;
-    background-color: lightgrey;
-}
-
-.lista ul li {
-    color: white;
-    margin-bottom: 15px;
-}
-
 /* Mapa */
+
 #map {
     width: 740px;
     height: 400px;
     background: #CCC;
+}
+
+
+/* Calculo del peso */
+
+#calculo {
+    padding-left: 50px;
+}
+
+#calculo button {
+    width: 100px;
+    height: 45px;
 }
