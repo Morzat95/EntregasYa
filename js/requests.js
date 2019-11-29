@@ -51,6 +51,10 @@ var extractPedidos = function (response) {
     return responseExtract('requests', response);
 }
 
+var extractPedido = function (response) {
+    return responseExtract('request', response);
+}
+
 var extractIncidents = function (response) {
     return responseExtract('incidents', response);
 }
@@ -71,14 +75,53 @@ var resolverPosiciones = function (driver) {
             });
 }
 
-var resolverRepartidor = function (request) {
-    return requestDrivers(request.availableDrivers[0].driver_id)
-                .then(extractDriver)
-                .then(driver => {
-                    request.driver = driver;
-                    delete request.availableDrivers;
-                    return request;
-                });
+// var resolverRepartidor = function (request) {
+//     return requestDrivers(request.availableDrivers[0].driver_id)
+//                 .then(extractDriver)
+//                 .then(driver => {
+//                     request.driver = driver;
+//                     delete request.availableDrivers;
+//                     return request;
+//                 });
+// }
+
+// var resolverRepartidor = function (request, driver_id) {
+//     return requestDrivers(driver_id)
+//                 .then(extractDriver)
+//                 .then(driver => {
+//                     request.driver = driver;
+//                     delete request.availableDrivers;
+//                     return request;
+//                 });
+// }
+
+var resolverRepartidores = function (request) {
+    
+    availableDrivers = request.availableDrivers;
+
+    request.availableDrivers = [];
+
+    availableDrivers.forEach(driverData => {
+        requestDrivers(driverData.driver_id)
+            .then(extractDriver)
+            .then(driver => {
+                // driverData = driver;
+                driver.initialPosition = driverData.position;
+                request.availableDrivers.push(driver);
+            });
+        return request;
+    });
+
+    // return request;
+}
+
+var resolverRepartidor = function (request, driver_id) {
+    return requestDrivers(driver_id)
+        .then(extractDriver)
+        .then(driver => {
+            request.availableDrivers.push(driver);
+            return driver;
+        });
 }
 
 var resolveIncidentType = function (incident) {

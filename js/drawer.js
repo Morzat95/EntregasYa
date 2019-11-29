@@ -21,7 +21,8 @@ var Drawer = function() {
         console.log("Dibujando el repartidor: " + driver.id);
 
         info = driver.toString();
-        coordinate = driver.positions[0];
+        // coordinate = driver.positions[0];
+        coordinate = driver.initialPosition;
         icon = Config.getDriverIcon(driver.id);
 
         // return drawMarkerInMap(info, map, coordinate, icon);
@@ -45,7 +46,7 @@ var Drawer = function() {
                     map.removeLayer(markers[driverId]);
             }
     
-            callback;
+            // callback;
         }
 
     }
