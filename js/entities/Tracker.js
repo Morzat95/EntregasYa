@@ -5,6 +5,7 @@ class Tracker {
         this.drawer = drawer;
         this.drivers = {}
         this.selectedDriverId = -1;
+        this.driversData = {};
     }
 
     addDriver (driver) {
@@ -14,7 +15,7 @@ class Tracker {
         this.map.layersControl.addOverlay(driverLayer, driver.name);
 
         // Agregamos el marker del repartidor
-        let marker = this.drawer.drawDriverInMap(driver, map);
+        let marker = this.drawer.drawDriverInMap(driver, map, this.startTracking(driver));
         driverLayer.addLayer(marker);
       
         self = this;
@@ -34,7 +35,14 @@ class Tracker {
         this.drivers[driver.id] = driver; // Nos guardamos el repartidor. Igual creo que al final no lo usamos... :D
 
         // New
-        driver.run(updater);
+        // driver.run(updater); // Sino puedo hacer que corra después cuando el usuario selecciona el conductor mejor.
+
+        // this.driversData.push({ // nuevo versión 2.0
+        //     driver: driver,
+        //     updater: updater
+        // });
+
+        this.driversData[driver.id] = updater; // nuevo versión 2.0
 
         console.log(`Driver ${driver.id} added.`);
     }
@@ -52,5 +60,16 @@ class Tracker {
     // Para dejar de seguir al repartidor con el mapa
     resetMapView() {
         this.selectedDriverId = -1;
+    }
+
+    startTracking(driver) {
+        self = this;
+        return function () {
+            driver.run(self.getUpdater(driver.id));
+        }
+    }
+
+    getUpdater(driver_id) {
+        return this.driversData[driver_id];
     }
 }

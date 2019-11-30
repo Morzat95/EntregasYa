@@ -76,18 +76,21 @@ var bootstrap = function () {
                             .then(driver => {
                                 driver.initialPosition = driverData.position; // Sino unshift para ponerla al inicio del array de posiciones
                                 driver = new Driver(driver);
-                                drawDriver(driver);
+                                // drawDriver(driver);
+                                tracker.addDriver(driver);
                             });
             });
 
         });
 
     var drawDriver = function (driver) {
-        drawer.drawDriverInMap(driver, map, onDriverclick(driver));
+        drawer.drawDriverInMap(driver, map, onDriverclick);
     }
 
     var onDriverclick = function (driver) {
+        console.log('callback');
         return function (e) {
+            console.log('callback function return');
             tracker.addDriver(driver);
         }
     }
