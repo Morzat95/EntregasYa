@@ -6,6 +6,7 @@ class Tracker {
         this.drivers = {}
         this.selectedDriverId = -1;
         this.driversData = {};
+        this.isTracking = false;
     }
 
     addDriver (driver) {
@@ -68,8 +69,12 @@ class Tracker {
     startTracking () {
         self = this;
         return function (driver) {
-            driver.run(self.getUpdater(driver.id));
-            self.followDriver(driver.id);
+            self.selectedDriverId = driver.id;
+            if (!self.isTracking) {
+                self.isTracking = !self.isTracking;
+                driver.run(self.getUpdater(driver.id));
+                self.followDriver(driver.id);
+            }
         }
     }
 

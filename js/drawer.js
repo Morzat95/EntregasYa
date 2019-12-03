@@ -4,7 +4,7 @@ var Drawer = function() {
     var originMarker;
     var destinationMarker;
 
-    var selectedDriver = -1;
+    var selectedDriver = -1; // El nombre debería ser algo como 'focusDriverId'
     
     return {
         drawDriverInMap: drawDriverInMap,
@@ -191,7 +191,10 @@ var Drawer = function() {
         father.attr('size', requests.length);
     }
 
-    function removeUnselectedDrivers() {
+    /******************************************************************************
+     * Función para remover los markers de los repartidores no seleccionados.
+     */
+    function removeUnselectedDrivers() { // TODO: los layerControl todavía quedan disponibles. Borrarlos.
 
         for (var driverId in markers)
             if (driverId != selectedDriver)
@@ -203,6 +206,9 @@ var Drawer = function() {
 
     }
 
+    /******************************************************************************
+     * Función para mostrar el tiempo restante para que el pedido llegue a su destino.
+     */
     function updateRemainingTime(remainingTime) {
         $('#TiempoRestante').html(remainingTime.toString().toHHMMSS());
     }

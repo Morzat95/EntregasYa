@@ -63,3 +63,7 @@
 #incidents, #requests {
     margin: 7px 15px;
 }
+
+#TiempoRestante {
+    font-size: xx-large;
+}
