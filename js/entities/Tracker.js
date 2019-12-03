@@ -3,15 +3,16 @@ class Tracker {
     constructor (map, drawer) {
         this.map = map;
         this.drawer = drawer;
-        this.drivers = {}
-        this.selectedDriverId = -1;
-        this.driversData = {};
-        this.isTracking = false;
+        this.drivers = {}           // Para mapear los repartidores (no lo usamos al final)
+        this.selectedDriverId = -1; // Para centrar la vista del mapa en el repartidor
+        this.driversData = {};      // Para mapear la id de los repartidores con sus respectivos 'updaters'
+        this.isTracking = false;    // Para saber si está trackeando a un repartidor y no volver a llamar a 'updater'
     }
 
     addDriver (driver) {
         //Creamos el layer en el mapa para ese runner
         var driverLayer = L.layerGroup().addTo(this.map);
+
         // Agregamos el layer al control
         this.map.layersControl.addOverlay(driverLayer, driver.name);
 
@@ -32,20 +33,18 @@ class Tracker {
                 map.flyTo(newPosition, zoom);
             }
 
-            drawer.updateRemainingTime(self.calculateRemainingTime(driver));
+            let remainingTime = self.calculateRemainingTime(driver);
+            drawer.updateRemainingTime(remainingTime);
+
+            if (self.requestDelivered(remainingTime))
+                drawer.updateRequestStatus('ENTREGADO');
+            else
+                drawer.updateRequestStatus('EN CURSO'); // No me gusta que siempre se llame con lo mismo. Sacarlo del updater de alguna forma. tal vez onclick marker en drawer.js
         }
 
-        this.drivers[driver.id] = driver; // Nos guardamos el repartidor. Igual creo que al final no lo usamos... :D
+        this.drivers[driver.id] = driver;       // Nos guardamos el repartidor. Igual creo que al final no lo usamos... :D
 
-        // New
-        // driver.run(updater); // Sino puedo hacer que corra después cuando el usuario selecciona el conductor mejor.
-
-        // this.driversData.push({ // nuevo versión 2.0
-        //     driver: driver,
-        //     updater: updater
-        // });
-
-        this.driversData[driver.id] = updater; // nuevo versión 2.0
+        this.driversData[driver.id] = updater;  // Guardamos una referencia al 'updater' del repartidor
 
         console.log(`Driver ${driver.id} added.`);
     }
@@ -69,11 +68,10 @@ class Tracker {
     startTracking () {
         self = this;
         return function (driver) {
-            self.selectedDriverId = driver.id;
-            if (!self.isTracking) {
+            self.followDriver(driver.id);
+            if (!self.isTracking) { // Para evitar que se vuelva a llamar a 'updater' cuando ya está corriendo
                 self.isTracking = !self.isTracking;
-                driver.run(self.getUpdater(driver.id));
-                self.followDriver(driver.id);
+                driver.run(self.getUpdater(driver.id));                
             }
         }
     }
@@ -84,6 +82,10 @@ class Tracker {
     }
 
     calculateRemainingTime(driver) {
-        return driver.positions.length - driver.currentIdx;
+        return driver.positions.length - (driver.currentIdx + 1);   // Le sumo 1 para corregir el desfasaje por la falta de llamada cuando el índice es igual al largo del arreglo
+    }
+
+    requestDelivered(remainingTime) {
+        return remainingTime == 0;
     }
 }

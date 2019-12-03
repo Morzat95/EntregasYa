@@ -33,10 +33,6 @@
 
         <!-- Incident Types -->
         <div id="right">
-            <!-- <div id="requests">
-                <h2 class="title">Tus pedidos</h2>
-                <select name="PedidosSelect" id="PedidosSelect"></select>
-            </div> -->
             <div id="incidents">
                 <h2 class="title">Tipos de incidentes</h2>
                 <ul id="types"></ul>
@@ -44,7 +40,7 @@
 
 
 
-            <!-- Filtros Repartidores -->
+            <!-- Filtros Repartidores TODO: agregar filtro por calificación -->
             <div class="form-group">
                 <div class="title">
                     <h4>Seleccionar repartidor</h4>
@@ -82,16 +78,21 @@
                 <div>
                     <div class="listar-repartidores">
                         <button id="BtnRepartidores" type="button" class="btn btn-primary">
-                            Listar Repartidores
+                            Listar Repartidores <!-- TODO: hacer que ande -->
                         </button>
                     </div>
                 </div>
             </div>
 
-            <!-- Cálculo Tiempo de llegada -->
+            <!-- TODO: Faltaría agregar una lista con la info de los repartidorees y un botón para que al hacer click se seleccione ese como elegido -->
+
+            <!-- Estado del pedido -->
             <div>
                 <h4 class="title">Tiempo Restante</h4>
                 <span id="TiempoRestante"></span>
+                <br>
+                <label for="RequestStatus" id="StatusLabel">ESTADO:</label>
+                <span id="RequestStatus">ELIGIENDO REPARTIDOR</span>
             </div>
 
         </div>

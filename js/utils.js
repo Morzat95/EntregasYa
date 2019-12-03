@@ -1,4 +1,4 @@
-// Mapear pedidos
+// Mapear pedidos (no se usa)
 var mapearPedidos = function (requests) {
     return mapearObjetos(requests, 'id');
 }

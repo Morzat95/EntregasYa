@@ -49,8 +49,16 @@ var Config = {
     getDestinationIcon: function() {
       return L.icon({iconUrl: 'assets/images/destination.png', iconSize: [70, 45]});
     },
+
     // Ícono Destino
     getOriginIcon: function() {
       return L.icon({iconUrl: 'assets/images/origin.png', iconSize: [70, 45]});
+    },
+
+    getAddressIcon: function(type) {
+      switch (type) {
+        case 'Origen': return L.icon({iconUrl: 'assets/images/origin.png', iconSize: [70, 45]}); break;
+        case 'Destino': return L.icon({iconUrl: 'assets/images/destination.png', iconSize: [70, 45]}); break;
+      }
     }
 }

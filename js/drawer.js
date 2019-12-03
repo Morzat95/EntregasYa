@@ -1,10 +1,10 @@
-var Drawer = function() {
+var Drawer = function() { // TODO: ver si le paso el mapa...
     
-    var markers = {};
+    var markers = {}; // TODO: cambiar el nombre a 'driverMarkers' o algo así
     var originMarker;
     var destinationMarker;
 
-    var selectedDriver = -1; // El nombre debería ser algo como 'focusDriverId'
+    var selectedDriver = -1;    // El nombre debería ser algo como 'focusDriverId'
     
     return {
         drawDriverInMap: drawDriverInMap,
@@ -12,10 +12,11 @@ var Drawer = function() {
         drawTypesInList: drawTypesInList,
         drawMarkerInMap: drawMarkerInMap,
         populateAddressList: populateAddressList,
-        drawRequests: drawRequests,
         drawAddressInMap: drawAddressInMap,
-        updateRemainingTime: updateRemainingTime
+        updateRemainingTime: updateRemainingTime,
+        updateRequestStatus: updateRequestStatus
     }
+
 
     /******************************************************************************
      * Función para dibujar un repartidor en un mapa.
@@ -24,44 +25,41 @@ var Drawer = function() {
         console.log("Dibujando el repartidor: " + driver.id);
 
         info = driver.toString();
-        // coordinate = driver.positions[0];
-        coordinate = driver.initialPosition;
+        coordinate = driver.initialPosition; // O positions[0]. Ver...
         icon = Config.getDriverIcon(driver.id);
 
-        // return drawMarkerInMap(info, map, coordinate, icon);
         marker = drawMarkerInMap(info, map, coordinate, icon);
-
-        // if (callback)
-        //     marker.on('click', cleanDrivers(driver.id, callback(driver.id)));
         
         marker.on('click', function(e) {
             selectedDriver = driver.id;
             removeUnselectedDrivers(); // esto ejecutarlo después en misPedidos.js mejor cuando el usuario toque un botón o algo así
 
-            console.log('callback drawer');
             callback(driver);
         });
 
-        // markers.push({key: driver.id, value: marker});
         markers[`${driver.id}`] = marker;
         
 
         return marker;
     }
 
-    function cleanDrivers(driverSelected, callback) {
 
-        return function (e) {
-            for (var driverId in markers) {
-                if (driverId != driverSelected)
-                    map.removeLayer(markers[driverId]);
-            }
-    
-            // callback;
-        }
+    /******************************************************************************
+     * Función para remover los markers de los repartidores no seleccionados.
+     */
+    function removeUnselectedDrivers() { // TODO: los layerControl todavía quedan disponibles. Borrarlos.
+
+        for (var driverId in markers)
+            if (driverId != selectedDriver)
+                map.removeLayer(markers[driverId]);
+
+        selectedMarker = markers[selectedDriver];
+        markers = {};
+        markers[selectedDriver] = selectedMarker;
 
     }
     
+
     /******************************************************************************
      * Función para dibujar un incidente en un mapa.
      */
@@ -74,6 +72,7 @@ var Drawer = function() {
 
         return drawMarkerInMap(info, map, coordinate, icon);
     }
+
 
     /******************************************************************************
      * Función para dibujar una dirección en un mapa.
@@ -109,6 +108,7 @@ var Drawer = function() {
 
         return marker;
     }
+
     
     /******************************************************************************
      * Función para dibujar una marker en un mapa.
@@ -132,7 +132,8 @@ var Drawer = function() {
         marker.addTo(map);
 
         return marker;
-	}
+    }
+    
 
     /******************************************************************************
      * Función para listar los tipos de incidente en la página.
@@ -144,6 +145,7 @@ var Drawer = function() {
             $("#"+nodeId).append(li);
         });
     }
+
 
     /******************************************************************************
      * Función para mostrar las opciones para la dirección normalizada en la página.
@@ -172,44 +174,28 @@ var Drawer = function() {
         list.show("slow");
     }
 
-    /******************************************************************************
-     * Función para listar los pedidos en la página.
-     */
-    function drawRequests (requests, nodeId) {
-        console.log('Dibujando requests en select');
-        father = $('#'+nodeId); // Select
-
-        // Creamos la opción y la asignamos al select
-        requests.forEach(request => {
-            option = $('<option/>');
-            option.attr({ 'value': request.id }).text(`Pedido: ${request.id}`);
-
-            father.append(option);
-        });
-
-        // Necesario para desplegar todas las opciones
-        father.attr('size', requests.length);
-    }
-
-    /******************************************************************************
-     * Función para remover los markers de los repartidores no seleccionados.
-     */
-    function removeUnselectedDrivers() { // TODO: los layerControl todavía quedan disponibles. Borrarlos.
-
-        for (var driverId in markers)
-            if (driverId != selectedDriver)
-                map.removeLayer(markers[driverId]);
-
-        selectedMarker = markers[selectedDriver];
-        markers = {};
-        markers[selectedDriver] = selectedMarker;
-
-    }
 
     /******************************************************************************
      * Función para mostrar el tiempo restante para que el pedido llegue a su destino.
      */
     function updateRemainingTime(remainingTime) {
         $('#TiempoRestante').html(remainingTime.toString().toHHMMSS());
+    }
+
+
+    /******************************************************************************
+     * Función para mostrar el estado actual del pedido
+     */
+    function updateRequestStatus(newStatus) {
+        // $('#RequestStatus').html(newStatus);
+
+        element = $('#RequestStatus');
+
+        switch (newStatus) { // TODO: enums
+            case 'EN CURSO': element.css('color', 'yellow'); break;
+            case 'ENTREGADO': element.css('color', 'greenyellow'); break;
+        }
+
+        element.html(newStatus);
     }
 }

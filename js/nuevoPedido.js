@@ -7,15 +7,14 @@ var bootstrap = function() {
     originAddress = null;
     destinationAddress = null;
 
-    // -- Mapa --
 
-    map = createMap('map', Config.ungsLocation); // Creamos el mapa
+// -- Mapa --
+    map = createMap('map', Config.ungsLocation);    // Creamos el mapa
 
-    var drawer = new Drawer(); // Componente que sabe dibujar en un mapa
+    var drawer = new Drawer();                      // Componente que sabe dibujar en un mapa
 
-    // -- Direcciones --
 
-    // Nueva versión del normalizador =========================================================
+// -- Direcciones --
     // Normalizamos las direcciones después de que el usuario deja de tipear en X cantidad de tiempo
     keyupHandlerNormalizar('Origen');
     keyupHandlerNormalizar('Destino');
@@ -38,27 +37,27 @@ var bootstrap = function() {
     }
 
     function normalizar(id) {
-        address = document.getElementById(id).value; // Obtenemos la dirección ingresada por el usuario
+        address = document.getElementById(id).value;        // Obtenemos la dirección ingresada por el usuario
 
-        requestAddress(address) // Pedimos una dirección
-            .then(response => checkAddress(response, id)) // Verificamos si hay que mostrar o no un mensaje de error
-            .then(extractAddress) // Extraemos las posibles direcciones
+        requestAddress(address)                             // Pedimos una dirección
+            .then(response => checkAddress(response, id))   // Verificamos si hay que mostrar o no un mensaje de error
+            .then(extractAddress)                           // Extraemos las posibles direcciones
             .then(address => {
-                addresses = mapearDirecciones(address); // Mapeamos las direcciones para usarlas posteriormente
-                populateAddress(address, id); // Mostramos las opciones al usuario
+                addresses = mapearDirecciones(address);     // Mapeamos las direcciones para usarlas posteriormente
+                populateAddress(address, id);               // Mostramos las opciones al usuario
             });
     }
 
     var checkAddress = function(response, id) {
-        errorMessage = response['errorMessage'] ? response['errorMessage'] : ''; // cambiar '' por undefined
+        errorMessage = response['errorMessage'] ? response['errorMessage'] : '';    // cambiar '' por undefined
         document.getElementById('error-' + id).innerHTML = errorMessage;
 
         // Le agregamos animación y color para que quede más lindo :D
         existError = errorMessage != '';
 
         inputField = document.getElementById(id);
-        inputField.classList.toggle("is-valid", !existError); // Si no existe el error lo coloreamos como válido
-        inputField.classList.toggle("is-invalid", existError); // Si existe el error lo coloreamos como inválido
+        inputField.classList.toggle("is-valid", !existError);   // Si no existe el error lo coloreamos como válido
+        inputField.classList.toggle("is-invalid", existError);  // Si existe el error lo coloreamos como inválido
 
         return response;
     }
@@ -88,8 +87,12 @@ var bootstrap = function() {
         });
     }
 
-    // -- Calculo de peso volumetrico --
-    
+    var populateAddress = function(address, id) {
+        drawer.populateAddressList(address, 'DirectionsList' + id);
+    }
+
+
+// -- Calculo de peso volumetrico --
     $('#alto, #ancho, #largo').bind("change keyup", calcularPesoVolumétrico);
     
     // Mostrar info sobre Peso Volumétrico
@@ -111,66 +114,8 @@ var bootstrap = function() {
         }
     }
 
-    // -- Repartidores --
 
-    // Mostramos los repartidores cuando el usuario hace click en el respectivo botón
-    $('#BtnRepartidores').click(function() {
-        obtenerRepartidoresDisponibles();
-    });
-
-    function obtenerRepartidoresDisponibles() {
-
-        requestDrivers() // Pedimos los reapratidores
-            .then(extractDrivers) // Extraemos los reapartidores
-            .then(function(drivers) {
-                drivers.forEach(driver => { // Por cada repartidor...
-                    resolverPosiciones(driver) // Pedimos sus posiciones
-                        .then(driver => {
-                            driver = new Driver(driver); // Lo mapeamos a nuestra clase
-                            drawDriver(driver); // Lo dibujamos (primera posición)
-                        });
-                });
-            });
-
-        // No funciona como se espera
-        // tracker = new Tracker(map);
-        // requestDrivers()
-        //     .then(extractDriver)
-        //     .then(function (drivers) {
-        //         drivers.forEach(driver => {
-        //             resolverPosiciones(driver)
-        //                 .then(function (driver) {
-        //                     driver = new Driver(driver);
-        //                     tracker.addDriver(driver);
-        //                     // tracker.start();
-        //                     console.log(`Driver ${driver.id} added.`);
-
-        //                 })
-        //         });
-        //     })
-        //     .then(function() {
-        //         console.log('Fin.');
-        //         // console.log(tracker.driversData);
-        //         tracker.start();
-        //     });
-    }
-
-    var populateAddress = function(address, id) {
-        drawer.populateAddressList(address, 'DirectionsList' + id);
-    }
-
-    var drawDriver = function(driver) {
-        // drawer.drawDriverInMap(driver, map);
-        drawer.drawDriverInMap(driver, map, informarRepartidorSeleccionado);
-    }
-
-    function informarRepartidorSeleccionado(driverId) {
-        return function(e) {
-            alert(`Repartidor ${driverId} seleccionado`);
-        }
-    }
-
-    
+// -- Submit --
     $("#form").submit(function(event) {
 
         origenValido = $("#Origen").hasClass("is-valid");

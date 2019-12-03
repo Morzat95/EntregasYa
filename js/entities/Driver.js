@@ -15,7 +15,7 @@ class Driver {
             if(self.currentIdx < self.positions.length) {
                 self.run(callback);
             }
-        }, 1000);
+        }, 1000); // TODO: poner en configuración la frecuencia del timeout
     }
 
     currentPosition () {

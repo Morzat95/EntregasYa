@@ -1,5 +1,5 @@
-var requestAddress = function (address) {
-    return $.ajax(urlNormalizador + address + '&geocodificar=TRUE'); // Quiero siempre las coordenadas
+var requestAddress = function (address, geocodificar = 'TRUE') {
+    return $.ajax(urlNormalizador + address + '&geocodificar=' + geocodificar);    // Por default quiero las coordenadas
 }
 
 function requestDrivers(driver_id) {
@@ -73,46 +73,6 @@ var resolverPosiciones = function (driver) {
                 driver.positions = extractPosiciones(response);
                 return driver;
             });
-}
-
-// var resolverRepartidor = function (request) {
-//     return requestDrivers(request.availableDrivers[0].driver_id)
-//                 .then(extractDriver)
-//                 .then(driver => {
-//                     request.driver = driver;
-//                     delete request.availableDrivers;
-//                     return request;
-//                 });
-// }
-
-// var resolverRepartidor = function (request, driver_id) {
-//     return requestDrivers(driver_id)
-//                 .then(extractDriver)
-//                 .then(driver => {
-//                     request.driver = driver;
-//                     delete request.availableDrivers;
-//                     return request;
-//                 });
-// }
-
-var resolverRepartidores = function (request) {
-    
-    availableDrivers = request.availableDrivers;
-
-    request.availableDrivers = [];
-
-    availableDrivers.forEach(driverData => {
-        requestDrivers(driverData.driver_id)
-            .then(extractDriver)
-            .then(driver => {
-                // driverData = driver;
-                driver.initialPosition = driverData.position;
-                request.availableDrivers.push(driver);
-            });
-        return request;
-    });
-
-    // return request;
 }
 
 var resolverRepartidor = function (request, driver_id) {

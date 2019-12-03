@@ -20,8 +20,10 @@
 </head>
 
 <body>
+
     <!-- Navigation Bar -->
     <div id="nav-placeholder"></div>
+
 
     <!-- Content -->
     <div id="content">
@@ -29,10 +31,11 @@
             <h2>Por favor, complete los datos.</h2>
         </div>
 
-        <form id="form" action="mis-pedidos.html">
-        <!-- <form id="form"> -->
 
-            <!--Pedido de direcciones-->
+        <!-- Formulario -->
+        <form id="form" action="mis-pedidos.html">
+
+            <!-- Pedido de direcciones -->
             <div class="form-group">
                 <div class="title">
                     <h4>Dirección</h4>
@@ -60,8 +63,7 @@
 
             </div>
 
-
-            <!--Pedir datos de paquete-->
+            <!-- Pedir datos de paquete -->
             <div class="form-group">
                 <div class="title">
                     <h4>Datos de paquete</h4>
@@ -69,32 +71,31 @@
 
                 <div class="row">
                     <label for="">Tipo</label>
-                    <select class="form-control" id="TipoPaquete" name="TipoPaquete">
+                    <select class="form-control" id="TipoPaquete" name="TipoPaquete"> <!-- TODO: Llenar con valores por configuración -->
                         <option value="36">Paquete</option>
                         <option value="80">Tubo</option>
                     </select>
-                    <!--<input class="form-control" autocomplete="off" required />-->
                 </div>
 
                 <div class="row">
                     <div class="col">
                         <label for="">Alto</label><br>
                         <span class="unit-input">
-                            <input id="alto" class="unit-input__input" type="number" step="0.01" min="0" required>
+                            <input id="alto" class="unit-input__input" type="number" step="0.01" min="0.01" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Ancho</label><br>
                         <span class="unit-input">
-                            <input id="ancho" class="unit-input__input" type="number" step="0.01" min="0" required>
+                            <input id="ancho" class="unit-input__input" type="number" step="0.01" min="0.01" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
                     <div class="col">
                         <label for="">Largo</label><br>
                         <span class="unit-input">
-                            <input id="largo" class="unit-input__input" type="number" step="0.01" min="0" required>
+                            <input id="largo" class="unit-input__input" type="number" step="0.01" min="0.01" required>
                             <span class="unit-input__append">mts</span>
                         </span>
                     </div>
@@ -125,60 +126,15 @@
                     <label for="Descripción">Descripción</label>
                     <textarea name="Descripción" id="Descripción" rows="5" class="form-control"></textarea>
                 </div>
-
             </div>
-
-
-            <!--Seleccionar repartidor-->
-            <!-- <div class="form-group">
-                <div class="title">
-                    <h4>Seleccionar repartidor</h4>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <label for="">Cantidad de viajes</label>
-                        <select class="form-control">
-                            <option selected>Cantidad de viajes</option>
-                            <option value="1">menos de 50</option>
-                            <option value="2">mas de 50</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="">Tipo de vehiculo</label>
-                        <select class="form-control">
-                            <option selected>Tipo de vehiculo</option>
-                            <option value="1">Camioneta</option>
-                            <option value="2">Automovil</option>
-                            <option value="3">Bici</option>
-                            <option value="4">Otros</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="">Tiempo estimado de espera</label>
-                        <select class="form-control">
-                            <option selected>Tiempo de espera</option>
-                            <option value="1"> 1 - 30 min</option>
-                            <option value="2">30 - 60 min</option>
-                            <option value="3">más de 1 hora</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div class="listar-repartidores">
-                        <button id="BtnRepartidores" type="button" class="btn btn-primary">
-                            Listar Repartidores
-                        </button>
-                    </div>
-                </div>
-            </div> -->
 
             <div class="form-button">
                 <button type="submit" class="btn btn-primary">Seleccionar Repartidor</button>
             </div>
+
         </form>
     </div>
-    <!-- Formulario -->
+
 
     <!-- Pie de página -->
     <div id="footer-placeholder"></div>

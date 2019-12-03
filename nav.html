@@ -11,51 +11,35 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         
         <ul class="navbar-nav mr-auto">
-            <!--
+            
             <li class="nav-item active">
                 <a class="nav-link" href="index.html">Home<span class="sr-only">(current)</span></a>
-            </li>
-            -->
-            <!--
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            -->
-            <!--
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-            </li>
-            -->
-            <!--
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-            </li>
-            -->
+            </li>            
             <li class="nav-item">
                 <a class="nav-link" href="nuevo-pedido.html" tabindex="-1" aria-disabled="true">Nuevo Pedido</a>
             </li>
             
-            <li class="nav-item">
-                <a class="nav-link" href="mis-pedidos.html" tabindex="-1" aria-disabled="true">Mis Pedidos</a>
+            <li class="nav-item dropdown"> <!-- Trucazo ;) (Deshabilitar en producción) -->
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Mis Pedidos<br>(Develop)
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="mis-pedidos.html?TipoPaquete=36">Pedido 36</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="mis-pedidos.html?TipoPaquete=80">Pedido 80</a>
+                </div>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="nuevo-pedido.html" tabindex="-1" aria-disabled="true">Ayuda</a>
+                <a class="nav-link" href="index.html" tabindex="-1" aria-disabled="true">Ayuda</a>
             </li>
         </ul>
-        <!--
+        
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
-        -->
+        
     </div>
 </nav>
