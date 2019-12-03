@@ -30,6 +30,8 @@ class Tracker {
                 let zoom = 16;
                 map.flyTo(newPosition, zoom);
             }
+
+            drawer.updateRemainingTime(self.calculateRemainingTime(driver));
         }
 
         this.drivers[driver.id] = driver; // Nos guardamos el repartidor. Igual creo que al final no lo usamos... :D
@@ -67,11 +69,16 @@ class Tracker {
         self = this;
         return function (driver) {
             driver.run(self.getUpdater(driver.id));
+            self.followDriver(driver.id);
         }
     }
 
     // Devuelve la función del repartidor que actualiza su posición
     getUpdater(driver_id) {
         return this.driversData[driver_id];
+    }
+
+    calculateRemainingTime(driver) {
+        return driver.positions.length - driver.currentIdx;
     }
 }

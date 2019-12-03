@@ -13,7 +13,8 @@ var Drawer = function() {
         drawMarkerInMap: drawMarkerInMap,
         populateAddressList: populateAddressList,
         drawRequests: drawRequests,
-        drawAddressInMap: drawAddressInMap
+        drawAddressInMap: drawAddressInMap,
+        updateRemainingTime: updateRemainingTime
     }
 
     /******************************************************************************
@@ -200,5 +201,9 @@ var Drawer = function() {
         markers = {};
         markers[selectedDriver] = selectedMarker;
 
+    }
+
+    function updateRemainingTime(remainingTime) {
+        $('#TiempoRestante').html(remainingTime.toString().toHHMMSS());
     }
 }

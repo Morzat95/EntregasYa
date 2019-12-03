@@ -7,6 +7,8 @@ var bootstrap = function () {
     drawer = new Drawer(); // Instanciamos al que sabe dibujar en el mapa y la página
     tracker = new Tracker(map, drawer); // Instanciamos un trackeador
 
+// -- Retriving Data From URL --
+
     requestId = getRequestId();
 
     function getRequestId() {
@@ -88,35 +90,22 @@ var bootstrap = function () {
 
         });
 
-    var drawDriver = function (driver) {
-        drawer.drawDriverInMap(driver, map, onDriverclick);
-    }
-
-    var onDriverclick = function (driver) {
-        console.log('callback');
-        return function (e) {
-            console.log('callback function return');
-            tracker.addDriver(driver);
-        }
-    }
-
-    // var drawAvailableDraiver = function (availableDriver) {
-    //     drawer.drawMarkerInMap(`Repartidor ${availableDriver.driver_id}`, map, availableDriver.position);
+    // var drawDriver = function (driver) {
+    //     drawer.drawDriverInMap(driver, map, onDriverclick);
     // }
 
-    // function onDriverclick(driver_id) {
-    //     return function(e) {
-    //         resolverRepartidor(currentRequest, driver_id) // Le agregamos el repartidor al pedido
-    //             .then(request => {
-    //                 resolverPosiciones(request.driver) // Pedimos las posiciones del repartidor
-    //                     .then(driver => {
-    //                         driver = new Driver(driver); // Mapeamos a una clase Driver
-    //                         tracker.addDriver(driver); // Agregamos el repartidor al trackeador
-    //                         console.log('Driver agregado a Tracker');
-    //                     })
-    //             })
+    // var onDriverclick = function (driver) {
+    //     console.log('callback');
+    //     return function (e) {
+    //         console.log('callback function return');
+    //         tracker.addDriver(driver);
     //     }
     // }
+
+    // Si arrastra el mapa dejamos de seguir al conductor
+    map.on('dragend', function () {
+        tracker.resetMapView();
+    });
 
 
 // -- Tipos de incidente --
@@ -143,23 +132,6 @@ var bootstrap = function () {
     var drawIncidentTypes = function (incidentTypes) {
         drawer.drawTypesInList(incidentTypes, 'types');
     }
-
-    // Cuando selecciona un request se actualiza la vista del mapa
-    setMapViewUpdater();
-
-    function setMapViewUpdater() {
-        select = $('#PedidosSelect');
-        select.click(function () {
-            selectedOption = $(this).val();
-            driver = pedidos[selectedOption].driver;
-            tracker.followDriver(driver.id);
-        });
-    }
-
-    // Si arrastra el mapa dejamos de seguir al conductor
-    map.on('dragend', function () {
-        tracker.resetMapView();
-    });
 
 }
 
