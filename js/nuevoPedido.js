@@ -90,17 +90,26 @@ var bootstrap = function() {
 
     // -- Calculo de peso volumetrico --
 
-    $('#BtnCalcularPeso').click(function() {
-        alto = $('#alto').val();
-        ancho = $('#ancho').val();
-        largo = $('#largo').val();
+    
+    $('#alto, #ancho, #largo').bind("change keyup", calcularPesoVolumétrico);
+    
+    $('#PVInfo').hover(function() {
+        var popup = document.getElementById("PVPopup");
+        popup.classList.toggle("show");
+    });
+    
+    var calcularPesoVolumétrico = function() {
+        console.log('Calculando Peso Volumétrico');
+
+        alto = $('#alto').val();    // mts
+        ancho = $('#ancho').val();  // mts
+        largo = $('#largo').val();  // mts
 
         if (alto != '' && ancho != '' && largo != '') {
-            calculo = (largo * ancho * alto) / 5000;
-            $("#peso").val(calculo);
+            calculo = (largo * ancho * alto) * 200;
+            $("#PesoVolumétrico").text(calculo + 'Kg');
         }
-    });
-
+    }
 
     // -- Repartidores --
 
@@ -168,7 +177,7 @@ var bootstrap = function() {
         destinoValido = $("#Destino").hasClass("is-valid");
 
         if (origenValido && destinoValido)
-            alert("Su pedido ha sido creado con éxito.");
+            window.location = 'mis-pedidos.html?' + $('#TipoPaquete').children("option:selected").val();
 
         event.preventDefault();
     });
