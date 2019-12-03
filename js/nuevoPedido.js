@@ -170,7 +170,7 @@ var bootstrap = function() {
         }
     }
 
-    // Emitimos una notificación cuando se crea un pedido
+    
     $("#form").submit(function(event) {
 
         origenValido = $("#Origen").hasClass("is-valid");
