@@ -33,14 +33,61 @@
 
         <!-- Incident Types -->
         <div id="right">
-            <div id="requests">
+            <!-- <div id="requests">
                 <h2 class="title">Tus pedidos</h2>
                 <select name="PedidosSelect" id="PedidosSelect"></select>
-            </div>
+            </div> -->
             <div id="incidents">
                 <h2 class="title">Tipos de incidentes</h2>
                 <ul id="types"></ul>
             </div>
+
+
+
+            <!-- Filtros Repartidores -->
+            <div class="form-group">
+                <div class="title">
+                    <h4>Seleccionar repartidor</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <label for="">Cantidad de viajes</label>
+                        <select class="form-control">
+                            <option selected>Cantidad de viajes</option>
+                            <option value="1">menos de 50</option>
+                            <option value="2">mas de 50</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="">Tipo de vehiculo</label>
+                        <select class="form-control">
+                            <option selected>Tipo de vehiculo</option>
+                            <option value="1">Camioneta</option>
+                            <option value="2">Automovil</option>
+                            <option value="3">Bici</option>
+                            <option value="4">Otros</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <label for="">Tiempo estimado de espera</label>
+                        <select class="form-control">
+                            <option selected>Tiempo de espera</option>
+                            <option value="1"> 1 - 30 min</option>
+                            <option value="2">30 - 60 min</option>
+                            <option value="3">más de 1 hora</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <div class="listar-repartidores">
+                        <button id="BtnRepartidores" type="button" class="btn btn-primary">
+                            Listar Repartidores
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
