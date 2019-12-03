@@ -8,13 +8,18 @@ var bootstrap = function () {
     tracker = new Tracker(map, drawer); // Instanciamos un trackeador
 
     requestId = getRequestId();
-    
-    function getRequestId() {
-        requestID = window.location.search.replace(/^\?/, '');
-        console.log(`Request ID: ${requestID}`);
 
-        return requestID;
+    function getRequestId() {
+       return retrieveParamsData('TipoPaquete');
     }
+
+    function retrieveParamsData(param) {
+        var url_string = window.location.href;
+        var url = new URL(url_string);
+        var value = url.searchParams.get(param);
+        return value;
+    }
+
 
 // -- Pedidos --
     // requestPedidos(requestId) // Pedimos el pedido

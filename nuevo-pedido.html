@@ -29,8 +29,8 @@
             <h2>Por favor, complete los datos.</h2>
         </div>
 
-        <!-- <form id="form" action="mis-pedidos.html"> -->
-        <form id="form">
+        <form id="form" action="mis-pedidos.html">
+        <!-- <form id="form"> -->
 
             <!--Pedido de direcciones-->
             <div class="form-group">
@@ -42,7 +42,7 @@
                 <input id="Origen" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" required>
                 <span id="error-Origen" class="text-danger"></span>
                 <div class="direction-list">
-                    <select name="DirectionsList" id="DirectionsListOrigen" class="form-control"></select>
+                    <select name="DirectionsListOrigen" id="DirectionsListOrigen" class="form-control"></select>
                 </div>
 
                 <br>
@@ -51,7 +51,7 @@
                 <input id="Destino" class="form-control" autocomplete="off" placeholder="Loria 300, Lomas" required>
                 <span id="error-Destino" class="text-danger"></span>
                 <div class="direction-list">
-                    <select name="DirectionsList" id="DirectionsListDestino" class="form-control"></select>
+                    <select name="DirectionsListDestino" id="DirectionsListDestino" class="form-control"></select>
                 </div>
 
                 <br>
@@ -69,7 +69,7 @@
 
                 <div class="row">
                     <label for="">Tipo</label>
-                    <select class="form-control" id="TipoPaquete">
+                    <select class="form-control" id="TipoPaquete" name="TipoPaquete">
                         <option value="36">Paquete</option>
                         <option value="80">Tubo</option>
                     </select>
