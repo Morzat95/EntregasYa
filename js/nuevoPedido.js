@@ -178,10 +178,12 @@ var bootstrap = function() {
 
         if (!origenValido || !destinoValido) {
             event.preventDefault();
-        }
-            // window.location = 'mis-pedidos.html?' + $('#TipoPaquete').children("option:selected").val();
+            
+            invalidAddress = !origenValido ? 'Origen' : 'Destino';
 
-        // event.preventDefault(); // Si saco esto, el action del form va. Ver los parámetros que le paso. https://www.w3schools.com/jsref/event_preventdefault.asp https://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters
+            alert('Dirección de ' + invalidAddress + ' inválida');
+        }
+
     });
 
 }
