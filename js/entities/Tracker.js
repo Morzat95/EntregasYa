@@ -15,7 +15,7 @@ class Tracker {
         this.map.layersControl.addOverlay(driverLayer, driver.name);
 
         // Agregamos el marker del repartidor
-        let marker = this.drawer.drawDriverInMap(driver, map, this.startTracking(driver));
+        let marker = this.drawer.drawDriverInMap(driver, map, this.startTracking());
         driverLayer.addLayer(marker);
       
         self = this;
@@ -62,13 +62,15 @@ class Tracker {
         this.selectedDriverId = -1;
     }
 
-    startTracking(driver) {
+    // Callback para empezar a trackear a un repartidor
+    startTracking () {
         self = this;
-        return function () {
+        return function (driver) {
             driver.run(self.getUpdater(driver.id));
         }
     }
 
+    // Devuelve la función del repartidor que actualiza su posición
     getUpdater(driver_id) {
         return this.driversData[driver_id];
     }
