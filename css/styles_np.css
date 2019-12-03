@@ -80,7 +80,7 @@ body #content {
 }
 
 
-/*test*/
+/* Style para los datos del pedido */
 
 .unit-input {
     border: #DFDFDF solid 1px;
@@ -112,6 +112,10 @@ body #content {
 
 .unit-input__append {
     border-left-width: 1px;
+}
+
+#Descripción {
+    width: 100%;
 }
 
 
