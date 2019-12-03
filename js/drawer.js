@@ -3,6 +3,8 @@ var Drawer = function() {
     var markers = {};
     var originMarker;
     var destinationMarker;
+
+    var selectedDriver = -1;
     
     return {
         drawDriverInMap: drawDriverInMap,
@@ -21,14 +23,23 @@ var Drawer = function() {
         console.log("Dibujando el repartidor: " + driver.id);
 
         info = driver.toString();
-        coordinate = driver.positions[0];
+        // coordinate = driver.positions[0];
+        coordinate = driver.initialPosition;
         icon = Config.getDriverIcon(driver.id);
 
         // return drawMarkerInMap(info, map, coordinate, icon);
         marker = drawMarkerInMap(info, map, coordinate, icon);
 
-        if (callback)
-            marker.on('click', cleanDrivers(driver.id, callback(driver.id)));
+        // if (callback)
+        //     marker.on('click', cleanDrivers(driver.id, callback(driver.id)));
+        
+        marker.on('click', function(e) {
+            selectedDriver = driver.id;
+            removeUnselectedDrivers(); // esto ejecutarlo después en misPedidos.js mejor cuando el usuario toque un botón o algo así
+
+            console.log('callback drawer');
+            callback(driver);
+        });
 
         // markers.push({key: driver.id, value: marker});
         markers[`${driver.id}`] = marker;
@@ -45,7 +56,7 @@ var Drawer = function() {
                     map.removeLayer(markers[driverId]);
             }
     
-            callback;
+            // callback;
         }
 
     }
@@ -177,5 +188,17 @@ var Drawer = function() {
 
         // Necesario para desplegar todas las opciones
         father.attr('size', requests.length);
+    }
+
+    function removeUnselectedDrivers() {
+
+        for (var driverId in markers)
+            if (driverId != selectedDriver)
+                map.removeLayer(markers[driverId]);
+
+        selectedMarker = markers[selectedDriver];
+        markers = {};
+        markers[selectedDriver] = selectedMarker;
+
     }
 }
