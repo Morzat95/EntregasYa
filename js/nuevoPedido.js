@@ -89,16 +89,16 @@ var bootstrap = function() {
     }
 
     // -- Calculo de peso volumetrico --
-
     
     $('#alto, #ancho, #largo').bind("change keyup", calcularPesoVolumétrico);
     
+    // Mostrar info sobre Peso Volumétrico
     $('#PVInfo').hover(function() {
         var popup = document.getElementById("PVPopup");
         popup.classList.toggle("show");
     });
-    
-    var calcularPesoVolumétrico = function() {
+
+    function calcularPesoVolumétrico () {
         console.log('Calculando Peso Volumétrico');
 
         alto = $('#alto').val();    // mts
@@ -106,8 +106,8 @@ var bootstrap = function() {
         largo = $('#largo').val();  // mts
 
         if (alto != '' && ancho != '' && largo != '') {
-            calculo = (largo * ancho * alto) * 200;
-            $("#PesoVolumétrico").text(calculo + 'Kg');
+            calculo = (largo * ancho * alto) * 200; // Podría ponerse como una variable de configuración...
+            $("#PesoVolumétrico").text(Math.ceil(calculo) + 'Kg');
         }
     }
 
