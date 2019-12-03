@@ -1,10 +1,10 @@
 var Drawer = function() { // TODO: ver si le paso el mapa...
     
-    var markers = {}; // TODO: cambiar el nombre a 'driverMarkers' o algo así
+    var driverMarkers = {};
     var originMarker;
     var destinationMarker;
 
-    var selectedDriver = -1;    // El nombre debería ser algo como 'focusDriverId'
+    var selectedDriver = -1;    // TODO: El nombre debería ser algo como 'focusDriverId'
     
     return {
         drawDriverInMap: drawDriverInMap,
@@ -37,7 +37,7 @@ var Drawer = function() { // TODO: ver si le paso el mapa...
             callback(driver);
         });
 
-        markers[`${driver.id}`] = marker;
+        driverMarkers[`${driver.id}`] = marker;
         
 
         return marker;
@@ -49,13 +49,13 @@ var Drawer = function() { // TODO: ver si le paso el mapa...
      */
     function removeUnselectedDrivers() { // TODO: los layerControl todavía quedan disponibles. Borrarlos.
 
-        for (var driverId in markers)
+        for (var driverId in driverMarkers)
             if (driverId != selectedDriver)
-                map.removeLayer(markers[driverId]);
+                map.removeLayer(driverMarkers[driverId]);
 
-        selectedMarker = markers[selectedDriver];
-        markers = {};
-        markers[selectedDriver] = selectedMarker;
+        selectedMarker = driverMarkers[selectedDriver];
+        driverMarkers = {};
+        driverMarkers[selectedDriver] = selectedMarker;
 
     }
     

@@ -6,7 +6,8 @@ urlRequests = '/requests/';
 urlIncidents = '/incidents/';
 urlIncidentsTypes = '/incidenttypes/';
 scoreIcon = '★';
-ungsLocation = [-34.5221554, -58.7000067];
+ungsLocation = [-34.5221554, -58.7000067];  // Ubicación geográfica de la UNGS
+driverUpdateFrequency = 1000;               // Frecuencia a la que se actualiza la posición del repartidor
 
 var Config = {
     urlNormalizador: urlNormalizador,
@@ -18,6 +19,7 @@ var Config = {
     urlIncidentsTypes: urlIncidentsTypes,
     scoreIcon: scoreIcon,
     ungsLocation: ungsLocation,
+    driverUpdateFrequency: driverUpdateFrequency,
 
 
     // Iconos por driver
