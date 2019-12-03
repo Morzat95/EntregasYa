@@ -93,6 +93,8 @@ var Drawer = function() {
             // icon = Config.getDestinationIcon(address); TODO
         }
 
+        map.flyTo(marker._latlng);
+
         return marker;
     }
     

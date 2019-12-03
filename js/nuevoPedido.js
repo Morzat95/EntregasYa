@@ -179,7 +179,7 @@ var bootstrap = function() {
         if (origenValido && destinoValido)
             window.location = 'mis-pedidos.html?' + $('#TipoPaquete').children("option:selected").val();
 
-        event.preventDefault();
+        event.preventDefault(); // Si saco esto, el action del form va. Ver los parámetros que le paso. https://www.w3schools.com/jsref/event_preventdefault.asp https://stackoverflow.com/questions/979975/how-to-get-the-value-from-the-get-parameters
     });
 
 }
