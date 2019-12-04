@@ -1,4 +1,4 @@
-var bootstrap = function () { // TODO: cambiar nombre al html y al js
+var bootstrap = function () {
     urlEntregasYa = Config.urlEntregasYa;
     urlRequests = Config.urlRequests;
 
