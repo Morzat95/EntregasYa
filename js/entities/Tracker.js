@@ -44,7 +44,7 @@ class Tracker {
         console.log(`Driver ${driver.id} added.`);
     }
 
-    // Para obtener la posición actual del repartidor... Ya no lo usamos pero lo dejo por si me equivoco y se rompe todo :D
+    // Para obtener la posición actual del repartidor... Ya no lo usamos pero lo dejo porque queda lindo :D
     getCurrentPosition(driver_id) {
         return this.drivers[driver_id].currentPosition();
     }
