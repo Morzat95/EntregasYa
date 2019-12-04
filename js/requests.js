@@ -2,6 +2,12 @@ var requestAddress = function (address, geocodificar = 'TRUE') {
     return $.ajax(urlNormalizador + address + '&geocodificar=' + geocodificar);    // Por default quiero las coordenadas
 }
 
+var requestAddressLatLng = function (coordinate, tipoResultado = 'calle_altura') {
+    lat = coordinate.lat;
+    lng = coordinate.lon;
+    return $.ajax(urlNormalizadorBase + 'lng=' + lng + '&lat=' + lat + '&TipoResultado=' + tipoResultado);
+}
+
 function requestDrivers(driver_id) {
     driver_id = driver_id ? driver_id : '';
     return $.ajax(urlEntregasYa + urlRepartidores + driver_id);
@@ -92,4 +98,22 @@ var resolveIncidentType = function (incident) {
                     delete incident.type_id;
                     return incident;
                 });
+}
+
+var resolverDireccion = function (request, addressSource, addressType) {    // Podría mapear la dirección a un objeto y ser al objeto al que le digo setAddressType(type)
+    return requestAddressLatLng(request[addressSource])                     // De esta forma puedo usar 'setAddressType' en nuevoPedido.js también... Ver.
+        .then(address => {
+            address.addressType = addressType;
+            request[addressSource] = address;
+            return request;
+        });
+}
+
+var resolverOrigen = function (request) {
+    addressType = Config.AddressType.ORIGEN;
+    return resolverDireccion(request, 'sender', addressType);
+}
+var resolverDestino = function (request) {
+    addressType = Config.AddressType.DESTINO;
+    return resolverDireccion(request, 'receiver', addressType);
 }

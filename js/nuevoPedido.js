@@ -11,14 +11,15 @@ var bootstrap = function() {
 // -- Mapa --
     map = createMap('map', Config.ungsLocation);    // Creamos el mapa
 
-    var drawer = new Drawer();                      // Componente que sabe dibujar en un mapa
+    var drawer = new Drawer(map);                      // Componente que sabe dibujar en un mapa
 
-
-// -- Direcciones --
+    // TODO: Generar los elementos HTML con los enums de la configuración
+    
+    // -- Direcciones --
     // Normalizamos las direcciones después de que el usuario deja de tipear en X cantidad de tiempo
     keyupHandlerNormalizar('Origen');
     keyupHandlerNormalizar('Destino');
-
+    
     function keyupHandlerNormalizar(nodeId) {
         ms = 500;
         $('#' + nodeId).keyup(delay(function(e) {
@@ -26,7 +27,7 @@ var bootstrap = function() {
             normalizar(nodeId);
         }, ms));
     }
-
+    
     // Función que me permite ejecutar una función pasada como parámetro después de X tiempo
     function delay(fn, ms) {
         let timer = 0;
@@ -35,7 +36,8 @@ var bootstrap = function() {
             timer = setTimeout(fn.bind(this, ...args), ms || 0);
         }
     }
-
+    
+    // TODO: cambiar address por addresses donde corresponda
     function normalizar(id) {
         address = document.getElementById(id).value;        // Obtenemos la dirección ingresada por el usuario
 
@@ -49,7 +51,7 @@ var bootstrap = function() {
     }
 
     var checkAddress = function(response, id) {
-        errorMessage = response['errorMessage'] ? response['errorMessage'] : '';    // cambiar '' por undefined
+        errorMessage = response['errorMessage'] || '';    // cambiar '' por undefined
         document.getElementById('error-' + id).innerHTML = errorMessage;
 
         // Le agregamos animación y color para que quede más lindo :D
@@ -62,33 +64,38 @@ var bootstrap = function() {
         return response;
     }
 
+    var populateAddress = function(address, id) {
+        drawer.populateAddressList(address, 'DirectionsList' + id);
+    }
+
     // Reemplazamos el input con la dirección seleccionada por el usuario y escondemos el resto
     autocompletarDireccionOrigen();
     autocompletarDireccionDestino();
 
     function autocompletarDireccionOrigen() {
-        autocompletarDireccion('DirectionsListOrigen', 'Origen', 'Origen');
+        let addressType = Config.AddressType.ORIGEN; // No me gusta esto acá
+        autocompletarDireccion('DirectionsListOrigen', 'Origen', addressType);
     }
-
+    
     function autocompletarDireccionDestino() {
-        autocompletarDireccion('DirectionsListDestino', 'Destino', 'Destino');
+        let addressType = Config.AddressType.DESTINO;
+        autocompletarDireccion('DirectionsListDestino', 'Destino', addressType);
     }
 
     function autocompletarDireccion(input, node_id, addressType) {
         $("#" + input).click(function() {
-            $("#" + node_id).val($(this).find(":selected").text());
+
+            selectedOption = $(this).find(":selected");
+
+            $("#" + node_id).val(selectedOption.text());
             $(this).hide("slow");
 
             // Dibujamos la dirección en el mapa
-            cod_calle = $(this).find(":selected").val();
+            cod_calle = selectedOption.val();
             direccionSeleccionada = addresses[cod_calle];
             direccionSeleccionada.addressType = addressType;
-            drawer.drawAddressInMap(direccionSeleccionada, map);
+            drawer.drawAddressInMap(direccionSeleccionada);
         });
-    }
-
-    var populateAddress = function(address, id) {
-        drawer.populateAddressList(address, 'DirectionsList' + id);
     }
 
 

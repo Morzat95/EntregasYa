@@ -1,7 +1,6 @@
 class Tracker {
 
-    constructor (map, drawer) {
-        this.map = map;
+    constructor (drawer) {
         this.drawer = drawer;
         this.drivers = {}           // Para mapear los repartidores (no lo usamos al final)
         this.selectedDriverId = -1; // Para centrar la vista del mapa en el repartidor
@@ -10,15 +9,9 @@ class Tracker {
     }
 
     addDriver (driver) {
-        //Creamos el layer en el mapa para ese runner
-        var driverLayer = L.layerGroup().addTo(this.map);
-
-        // Agregamos el layer al control
-        this.map.layersControl.addOverlay(driverLayer, driver.name);
-
         // Agregamos el marker del repartidor
-        let marker = this.drawer.drawDriverInMap(driver, map, this.startTracking());
-        driverLayer.addLayer(marker);
+        // let marker = this.drawer.drawDriverInMap(driver, this.startTracking());
+        let marker = this.drawer.drawDriverInMap(driver);
       
         self = this;
         var updater = function (newPosition) {
@@ -29,17 +22,19 @@ class Tracker {
 
             // Para seguir al conductor
             if (self.selectedDriverId == driver.id) {
-                let zoom = 16;
-                map.flyTo(newPosition, zoom);
+                let zoom = Config.driverZoom;
+                drawer.setView(newPosition, zoom);
             }
 
             let remainingTime = self.calculateRemainingTime(driver);
             drawer.updateRemainingTime(remainingTime);
 
+            let status = Config.RequestStatus;
+
             if (self.requestDelivered(remainingTime))
-                drawer.updateRequestStatus('ENTREGADO');
+                drawer.updateRequestStatus(status.ENTREGADO);
             else
-                drawer.updateRequestStatus('EN CURSO'); // No me gusta que siempre se llame con lo mismo. Sacarlo del updater de alguna forma. tal vez onclick marker en drawer.js
+                drawer.updateRequestStatus(status.EN_CURSO); // No me gusta que siempre se llame con lo mismo. Sacarlo del updater de alguna forma. tal vez onclick marker en drawer.js
         }
 
         this.drivers[driver.id] = driver;       // Nos guardamos el repartidor. Igual creo que al final no lo usamos... :D
@@ -87,5 +82,23 @@ class Tracker {
 
     requestDelivered(remainingTime) {
         return remainingTime == 0;
+    }
+
+    // Devuelve los repartidores cuyas propiedades matchean con los filtros pasados como parámetro
+    getMatchedDrivers(filters) {
+        let matchedDrivers = {};
+
+        for (var filter in filters) {
+            let filterValue = filters[filter];
+            for (var driver in this.drivers){
+                let currentDriver = this.drivers[driver];
+                if (!filterValue)
+                    matchedDrivers[currentDriver.id] = currentDriver;
+                else if (currentDriver[filter] == filterValue)
+                    matchedDrivers[currentDriver.id] = currentDriver;
+            }
+        }
+
+        return matchedDrivers;
     }
 }

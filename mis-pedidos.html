@@ -42,61 +42,73 @@
 
 
             <!-- Filtros Repartidores -->
-            <div class="form-group">
-                <div class="title">
-                    <h4>Seleccionar repartidor</h4>
+            <div id="Drivers">
+                <div class="form-group">
+                    <div class="title">
+                        <h4>Seleccionar repartidor</h4>
+                    </div>
+    
+                    <div class="row">
+                        <div class="col">
+                            <label for="">Cantidad de viajes</label>
+                            <select class="form-control">
+                                <option selected>Cantidad de viajes</option>
+                                <option value="1">menos de 50</option>
+                                <option value="2">mas de 50</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="">Tipo de vehiculo</label>
+                            <select class="form-control">
+                                <option selected>Tipo de vehiculo</option>
+                                <option value="1">Camioneta</option>
+                                <option value="2">Automovil</option>
+                                <option value="3">Bici</option>
+                                <option value="4">Otros</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="">Tiempo estimado de espera</label>
+                            <select class="form-control">
+                                <option selected>Tiempo de espera</option>
+                                <option value="1"> 1 - 30 min</option>
+                                <option value="2">30 - 60 min</option>
+                                <option value="3">más de 1 hora</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="">Calificación</label>
+                            <select class="form-control" id="score">
+                                <option value selected>Cualquiera</option>
+                                <option value="1">★</option>
+                                <option value="2">★★</option>
+                                <option value="3">★★★</option>
+                                <option value="4">★★★★</option>
+                                <option value="5">★★★★★</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="listar-repartidores">
+                            <button id="BtnListarRepartidores" type="button" class="btn btn-primary">
+                                Filtrar Repartidores
+                            </button>
+                        </div>
+                    </div>
                 </div>
-
+    
+    
+                <!-- Listado de Repartidores -->
                 <div class="row">
-                    <div class="col">
-                        <label for="">Cantidad de viajes</label>
-                        <select class="form-control">
-                            <option selected>Cantidad de viajes</option>
-                            <option value="1">menos de 50</option>
-                            <option value="2">mas de 50</option>
-                        </select>
+                    <div class="col-4">
+                      <div class="list-group" id="list-tab" role="tablist" name="list-tab"></div>
                     </div>
-                    <div class="col">
-                        <label for="">Tipo de vehiculo</label>
-                        <select class="form-control">
-                            <option selected>Tipo de vehiculo</option>
-                            <option value="1">Camioneta</option>
-                            <option value="2">Automovil</option>
-                            <option value="3">Bici</option>
-                            <option value="4">Otros</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="">Tiempo estimado de espera</label>
-                        <select class="form-control">
-                            <option selected>Tiempo de espera</option>
-                            <option value="1"> 1 - 30 min</option>
-                            <option value="2">30 - 60 min</option>
-                            <option value="3">más de 1 hora</option>
-                        </select>
-                    </div>
-                    <div class="col">
-                        <label for="">Calificación</label>
-                        <select class="form-control">
-                            <option selected>Cualquiera</option>
-                            <option value="1">★</option>
-                            <option value="2">★★</option>
-                            <option value="3">★★★</option>
-                            <option value="4">★★★★</option>
-                            <option value="5">★★★★★</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <div class="listar-repartidores">
-                        <button id="BtnRepartidores" type="button" class="btn btn-primary">
-                            Listar Repartidores <!-- TODO: hacer que ande -->
-                        </button>
+                    <div class="col-8">
+                      <div class="tab-content" id="nav-tabContent"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- TODO: Faltaría agregar una lista con la info de los repartidorees y un botón para que al hacer click se seleccione ese como elegido -->
 
             <!-- Estado del pedido -->
             <div>
@@ -127,9 +139,9 @@
     <script src="lib/leaflet/leaflet.js"></script>
 
     <!-- Include client -->
+    <script src="js/Config.js"></script>
     <script src="js/entities/Driver.js"></script>
     <script src="js/entities/Tracker.js"></script>
-    <script src="js/Config.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/mapCreation.js"></script>
     <script src="js/drawer.js"></script>

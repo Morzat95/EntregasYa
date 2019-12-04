@@ -1,24 +1,51 @@
-var bootstrap = function () {
+var bootstrap = function () { // TODO: cambiar nombre al html y al js
     urlEntregasYa = Config.urlEntregasYa;
     urlRequests = Config.urlRequests;
 
-    map = createMap('mapid', Config.ungsLocation); // Creamos el mapa
+    map = createMap('mapid', Config.ungsLocation);  // Creamos el mapa
 
-    drawer = new Drawer();              // Instanciamos al que sabe dibujar en el mapa y en la página
-    tracker = new Tracker(map, drawer); // Instanciamos un trackeador
+    drawer = new Drawer(map);       // Instanciamos al que sabe dibujar en el mapa y en la página
+    tracker = new Tracker(drawer);  // Instanciamos un trackeador
 
 
+// -- Filtros --
+    _filtros = {};  // Solo soportamos el Score porque el resto de filtros no son propiedades que tienen actualmente los repartidores
+
+    // Obtenemos el input del score
+    $('#score').change(function () {
+        selectedOption = $(this).find(':selected');
+        _filtros['score'] = selectedOption.val();
+    });
+
+    // Filtramos los repartidores
+    $('#BtnListarRepartidores').click(function () {
+
+        matchedDrivers = tracker.getMatchedDrivers(_filtros);
+
+        drawer.removeUnselectedDrivers(matchedDrivers);
+        drawer.removeAllContent(['list-tab', 'nav-tabContent']);
+        
+        for (var driverId in matchedDrivers)
+            drawer.drawDriverInList(matchedDrivers[driverId]);
+
+    });
+
+    
 // -- Retriving Data From URL --
-    requestId = getRequestId();
+    _url = retrieveData();      // URL con los datos del formulario
+    requestId = getRequestId(); // ID del pedido a buscar
+
+    function retrieveData() {
+        var url_string = window.location.href;
+        return new URL(url_string);
+    }
 
     function getRequestId() {
        return retrieveParamsData('TipoPaquete');
     }
 
     function retrieveParamsData(param) {
-        var url_string = window.location.href;
-        var url = new URL(url_string);
-        var value = url.searchParams.get(param);
+        var value = _url.searchParams.get(param);
         return value;
     }
 
@@ -26,11 +53,13 @@ var bootstrap = function () {
 // -- Pedidos --
     requestPedidos(requestId)                                   // Pedimos el pedido
     .then(extractPedido)                                        // Extraemos el pedido
+    .then(resolverOrigen)                                       // Resolvemos el Origen
+    .then(resolverDestino)                                      // Resolvemos el Destino
     .then(request => {
-        currentRequest = request;
-        
-        drawOrigin(request.sender);                             // Dibujamos el origen del pedido
-        drawDestination(request.receiver);                      // Dibujamos el destino del pedido
+        currentRequest = request;                               // Guardamos una referencia al request para usarlo posteriormente (creo que no lo usamos al final)
+
+        drawAddress(request.sender);                            // Dibujamos el origen del pedido
+        drawAddress(request.receiver);                          // Dibujamos el destino del pedido
         
         availableDrivers = request.availableDrivers;
         
@@ -43,27 +72,19 @@ var bootstrap = function () {
                 driver.initialPosition = driverData.position;   // Sino unshift para ponerla al inicio del array de posiciones
                 driver = new Driver(driver);                    // Mapeamos a una clase Driver
                 tracker.addDriver(driver);                      // Agregamos el repartidor al trackeador
+                drawDriverInList(driver);
             });
         });
         
     });
-    
-    var drawOrigin = function (address) {
-        drawAddress(address, 'Origen'); // TODO: ver de implementar enums para Origen, Destino y por ahí otro. https://www.sohamkamani.com/blog/2017/08/21/enums-in-javascript/
+
+    var drawAddress = function (address) {
+        flyOnCreate = false;    // Para no centrar la vista en el marker al crearlo
+        drawer.drawAddressInMap(address, flyOnCreate);        
     }
 
-    var drawDestination = function (address) {
-        drawAddress(address, 'Destino');
-    }
-
-    var drawAddress = function (address, type) {
-    // No puedo usar 'drawAddressInMap' porque la address que usa el normalizador es distina
-    // de la del pedido (solo son cooredenadas para éste último)
-        // address.addressType = type;
-        // drawer.drawAddressInMap(address, map);
-        
-        // drawer.drawMarkerInMap(type, map, address, Config.getOriginIcon());
-        drawer.drawMarkerInMap(type, map, address, Config.getAddressIcon(type));
+    var drawDriverInList = function (driver) {
+        drawer.drawDriverInList(driver, 'list-tab', 'nav-tabContent', tracker.startTracking());
     }
 
     // Si arrastra el mapa dejamos de seguir al conductor
@@ -89,7 +110,7 @@ var bootstrap = function () {
         })
 
     var drawIncident = function (incident) {
-        drawer.drawIncidentInMap(incident, map);
+        drawer.drawIncidentInMap(incident);
     }
 
     var drawIncidentTypes = function (incidentTypes) {
