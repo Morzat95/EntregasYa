@@ -1,11 +1,12 @@
 var requestAddress = function (address, geocodificar = 'TRUE') {
-    return $.ajax(urlNormalizador + address + '&geocodificar=' + geocodificar);    // Por default quiero las coordenadas
+    return $.ajax(urlNormalizador + 'direccion=' + address + '&geocodificar=' + geocodificar);    // Por default quiero las coordenadas
 }
 
 var requestAddressLatLng = function (coordinate, tipoResultado = 'calle_altura') {
     lat = coordinate.lat;
     lng = coordinate.lon;
-    return $.ajax(urlNormalizadorBase + 'lng=' + lng + '&lat=' + lat + '&TipoResultado=' + tipoResultado);
+    // return $.ajax(urlNormalizadorBase + 'lng=' + lng + '&lat=' + lat + '&TipoResultado=' + tipoResultado);
+    return $.ajax(urlNormalizador + 'lng=' + lng + '&lat=' + lat + '&TipoResultado=' + tipoResultado);
 }
 
 function requestDrivers(driver_id) {
