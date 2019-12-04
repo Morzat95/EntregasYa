@@ -5,7 +5,6 @@ var requestAddress = function (address, geocodificar = 'TRUE') {
 var requestAddressLatLng = function (coordinate, tipoResultado = 'calle_altura') {
     lat = coordinate.lat;
     lng = coordinate.lon;
-    // return $.ajax(urlNormalizadorBase + 'lng=' + lng + '&lat=' + lat + '&TipoResultado=' + tipoResultado);
     return $.ajax(urlNormalizador + 'lng=' + lng + '&lat=' + lat + '&TipoResultado=' + tipoResultado);
 }
 
