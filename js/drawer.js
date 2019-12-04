@@ -12,7 +12,7 @@ var Drawer = function(map) {
         drawIncidentInMap: drawIncidentInMap,
         drawTypesInList: drawTypesInList,
         drawMarkerInMap: drawMarkerInMap,
-        populateAddressList: populateAddressList,
+        populateAddressesList: populateAddressesList,
         drawAddressInMap: drawAddressInMap,
         updateRemainingTime: updateRemainingTime,
         updateRequestStatus: updateRequestStatus,
@@ -149,7 +149,7 @@ var Drawer = function(map) {
     /******************************************************************************
      * Función para mostrar las opciones para la dirección normalizada en la página.
      */
-    function populateAddressList (address, id) {
+    function populateAddressesList (address, id) {
         console.log('Generando Listado de Direcciones...');
 
         list = $('#'+id);

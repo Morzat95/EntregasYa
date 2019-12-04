@@ -44,9 +44,9 @@ var bootstrap = function() {
         requestAddress(address)                             // Pedimos una dirección
             .then(response => checkAddress(response, id))   // Verificamos si hay que mostrar o no un mensaje de error
             .then(extractAddress)                           // Extraemos las posibles direcciones
-            .then(address => {
-                addresses = mapearDirecciones(address);     // Mapeamos las direcciones para usarlas posteriormente
-                populateAddress(address, id);               // Mostramos las opciones al usuario
+            .then(addresses => {
+                _addresses = mapearDirecciones(addresses);    // Mapeamos las direcciones para usarlas posteriormente
+                populateAddresses(addresses, id);             // Mostramos las opciones al usuario
             });
     }
 
@@ -64,8 +64,8 @@ var bootstrap = function() {
         return response;
     }
 
-    var populateAddress = function(address, id) {
-        drawer.populateAddressList(address, 'DirectionsList' + id);
+    var populateAddresses = function(address, id) {
+        drawer.populateAddressesList(address, 'DirectionsList' + id);
     }
 
     // Reemplazamos el input con la dirección seleccionada por el usuario y escondemos el resto
@@ -92,7 +92,7 @@ var bootstrap = function() {
 
             // Dibujamos la dirección en el mapa
             cod_calle = selectedOption.val();
-            direccionSeleccionada = addresses[cod_calle];
+            direccionSeleccionada = _addresses[cod_calle];
             direccionSeleccionada.addressType = addressType;
             drawer.drawAddressInMap(direccionSeleccionada);
         });
