@@ -53,25 +53,6 @@ var Drawer = function(map) {
     /******************************************************************************
      * Función para remover los markers de los repartidores no seleccionados.
      */
-    function removeUnselectedDrivers() { // TODO: los layerControl todavía quedan disponibles. Borrarlos.
-        // TODO: Borrar esta probablemente
-        for (var driverId in driverLayers)
-            if (driverId != focusDriverId)
-                map.removeLayer(driverLayers[driverId]); // Ninguno sirve !! WTF?!
-                // driverLayers[driverId].removeFrom(map);
-                // driverLayers[driverId].remove(map);
-                // map.removeControl(driverLayers[driverId]);
-
-        // Como no puedo eliminar el layer no necesito esto
-        // selectedMarker = driverLayers[focusDriverId];
-        // driverLayers = {};
-        // driverLayers[focusDriverId] = selectedMarker;
-
-    }
-
-    /******************************************************************************
-     * Función para remover los markers de los repartidores no seleccionados.
-     */
     function removeUnselectedDrivers(drivers) {
         for (var driverId in driverLayers) {
             map.removeLayer(driverLayers[driverId]); // Borro todos los markers por defecto
