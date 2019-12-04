@@ -11,9 +11,8 @@ var bootstrap = function() {
 // -- Mapa --
     map = createMap('map', Config.ungsLocation);    // Creamos el mapa
 
-    var drawer = new Drawer(map);                      // Componente que sabe dibujar en un mapa
-
-    // TODO: Generar los elementos HTML con los enums de la configuración
+    var drawer = new Drawer(map);                   // Componente que sabe dibujar en un mapa
+    
     
     // -- Direcciones --
     // Normalizamos las direcciones después de que el usuario deja de tipear en X cantidad de tiempo
@@ -37,7 +36,6 @@ var bootstrap = function() {
         }
     }
     
-    // TODO: cambiar address por addresses donde corresponda
     function normalizar(id) {
         address = document.getElementById(id).value;        // Obtenemos la dirección ingresada por el usuario
 
