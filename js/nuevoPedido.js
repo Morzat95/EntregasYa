@@ -97,7 +97,7 @@ var bootstrap = function() {
     }
 
 
-// -- Calculo de peso volumetrico -- TODO: Crear función calcularPesoVolumétrico() y llamarla mejor.
+// -- Calculo de peso volumetrico --
     $('#alto, #ancho, #largo').bind("change keyup", calcularPesoVolumétrico);
     
     // Mostrar info sobre Peso Volumétrico
