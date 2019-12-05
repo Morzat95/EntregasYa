@@ -1,10 +1,10 @@
-class Tracker {
+class Tracker { // El profesor dijo que el Tracker como entidad por ahí no es necesaria en este caso
 
     constructor (drawer) {
         this.drawer = drawer;
         this.drivers = {}           // Para mapear los repartidores (no lo usamos al final)
         this.selectedDriverId = -1; // Para centrar la vista del mapa en el repartidor
-        this.driversData = {};      // Para mapear la id de los repartidores con sus respectivos 'updaters'
+        this.driversData = {};      // Para mapear la id de los repartidores con sus respectivos 'updaters'. TODO: no hace falta mapearlo porque es la misma fn con los mismos parámetros para todos los repartidores. Con hacer driver.run(updater) ya debería bastar
         this.isTracking = false;    // Para saber si está trackeando a un repartidor y no volver a llamar a 'updater'
     }
 
