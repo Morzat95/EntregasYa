@@ -26,7 +26,7 @@ var bootstrap = function () {
         drawer.removeAllContent(['list-tab', 'nav-tabContent']);
         
         for (var driverId in matchedDrivers)
-            drawer.drawDriverInList(matchedDrivers[driverId]);
+            drawDriverInList(matchedDrivers[driverId]);
 
     });
 

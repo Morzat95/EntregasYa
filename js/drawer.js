@@ -177,22 +177,12 @@ var Drawer = function(map) {
     /******************************************************************************
      * Función para desplegar los repartidores en lista junto con su información
      */
-    var ListTab = null;     // Tuve que hacer esto para que ande lcdsm
-    var TabContent = null;  // Tuve que hacer esto para que ande lcdsm
-    var Callback = null;    // Tuve que hacer esto para que ande lcdsm
     function drawDriverInList(driver, listTab, tabContent, callback) {
 
         console.log(`Agregando repartidor ${driver.name} (${driver.id}) a la lista`);
 
-        _listTab = $('#'+listTab);          // TODO: NO ME ESTÁ ENCONTRANDO EL ELEMENTO WTF?!
-        _tabContent = $('#'+tabContent);    // TODO: NO ME ESTÁ ENCONTRANDO EL ELEMENTO WTF?!
-
-        if (!ListTab)
-            ListTab = _listTab;
-        if (!TabContent)
-            TabContent = _tabContent;
-        if (!Callback)
-            Callback = callback;
+        _listTab = $('#'+listTab);
+        _tabContent = $('#'+tabContent);
         
         listSchema = $(`<a class="list-group-item list-group-item-action" id="list-driver${driver.id}-list" data-toggle="list" href="#list-driver${driver.id}" role="tab" aria-controls="driver${driver.id}">${driver.name}</a>`);
         listSchema.click(function() {
@@ -210,17 +200,13 @@ var Drawer = function(map) {
             selectedDrivers[focusDriverId] = driver;
             removeUnselectedDrivers(selectedDrivers);
 
-            // callback(driver);
-            Callback(driver);
+            callback(driver);
 
             $('#Drivers').hide();
         });
 
-        // _listTab.append(listSchema);
-        // _tabContent.append(tabSchema);
-        // tabSchema.append(selectButton);
-        ListTab.append(listSchema);
-        TabContent.append(tabSchema);
+        _listTab.append(listSchema);
+        _tabContent.append(tabSchema);
         tabSchema.append(selectButton);
 
     }
