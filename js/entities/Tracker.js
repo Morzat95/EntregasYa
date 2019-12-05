@@ -10,7 +10,6 @@ class Tracker { // El profesor dijo que el Tracker como entidad por ahí no es n
 
     addDriver (driver) {
         // Agregamos el marker del repartidor
-        // let marker = this.drawer.drawDriverInMap(driver, this.startTracking());
         let marker = this.drawer.drawDriverInMap(driver);
       
         self = this;
@@ -94,7 +93,7 @@ class Tracker { // El profesor dijo que el Tracker como entidad por ahí no es n
                 let currentDriver = this.drivers[driver];
                 if (!filterValue)
                     matchedDrivers[currentDriver.id] = currentDriver;
-                else if (currentDriver[filter] == filterValue)
+                else if (currentDriver[filter] >= filterValue)
                     matchedDrivers[currentDriver.id] = currentDriver;
             }
         }
