@@ -14,7 +14,7 @@ var bootstrap = function() {
     var drawer = new Drawer(map);                   // Componente que sabe dibujar en un mapa
     
     
-    // -- Direcciones --
+// -- Direcciones --
     // Normalizamos las direcciones después de que el usuario deja de tipear en X cantidad de tiempo
     keyupHandlerNormalizar('Origen');
     keyupHandlerNormalizar('Destino');
@@ -43,8 +43,8 @@ var bootstrap = function() {
             .then(response => checkAddress(response, id))   // Verificamos si hay que mostrar o no un mensaje de error
             .then(extractAddress)                           // Extraemos las posibles direcciones
             .then(addresses => {
-                _addresses = mapearDirecciones(addresses);    // Mapeamos las direcciones para usarlas posteriormente
-                populateAddresses(addresses, id);             // Mostramos las opciones al usuario
+                _addresses = mapearDirecciones(addresses);  // Mapeamos las direcciones para usarlas posteriormente
+                populateAddresses(addresses, id);           // Mostramos las opciones al usuario
             });
     }
 
